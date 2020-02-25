@@ -14,21 +14,58 @@
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="119dp"
-        android:layout_height="113dp"
-        android:background="@drawable/button_gr_round"
-        android:text="@string/button_symbol"
-        android:textSize="70sp" />
+    <RelativeLayout
+        android:id="@+id/AddItemRelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="119dp"
-        android:layout_height="113dp"
-        android:background="@drawable/button_gr_round"
-        android:layout_marginTop="25dp"
-        android:text="@string/button_symbol"
-        android:textSize="70sp"/>
+        <Button
+            android:id="@+id/AddItemReceiptPhoto"
+            android:layout_width="110dp"
+            android:layout_height="107dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button_gr_round"
+            android:text="@string/button_symbol"
+            android:textSize="70sp" />
+
+        <TextView
+            android:id="@+id/AddItemReceiptText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="40dp"
+            android:text="Add Receipt Image"
+            android:textSize="30sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/AddItemRelativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/AddItemPhoto"
+            android:layout_width="110dp"
+            android:layout_height="107dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button_gr_round"
+            android:text="@string/button_symbol"
+            android:textSize="70sp" />
+
+        <TextView
+            android:id="@+id/AddItemPhotoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="90dp"
+            android:text="Add Photo"
+            android:textSize="30sp"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
