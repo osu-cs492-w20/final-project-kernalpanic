@@ -30,14 +30,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        Button addItemButton = findViewById(R.id.btn_add_inventory);
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                goToAddItemScreen();
+            }
+        });
+    }
+
+    private void goToAddItemScreen(){
+        Intent intent = new Intent(this, addItemDetailActivity.class);
+        startActivity(intent);
     }
 
     @Override
