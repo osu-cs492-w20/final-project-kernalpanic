@@ -1,22 +1,23 @@
 package com.example.inventoryirecord.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class InventoryItem {
-    private String itemName;
-    private String dateAdded;
-    private String datePurchased;
-    private String make;
-    private String model;
-    private String serialNumber;
-    private String dateOfManufacture;
-    private String otherNotes;
-    private boolean newItem;
-    private double pricePaid;
-    private double value;
+public class InventoryItem implements Serializable {
+    public String itemName;
+    public String dateAdded;
+    public String datePurchased;
+    public String make;
+    public String model;
+    public String serialNumber;
+    public String dateOfManufacture;
+    public String otherNotes;
+    public boolean newItem;
+    public double pricePaid;
+    public double value;
     //image location??
-    private ArrayList<String> itemPics;
-    private ArrayList<String> receiptPics;
+    public ArrayList<String> itemPics;
+    public ArrayList<String> receiptPics;
 
     //to use the builder : InventoryItem inventoryItem =
     // InventoryItem.Builder.newInstance().setItemName("name").build();
