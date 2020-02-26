@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:showIn="@layout/activity_main">
+
+    <Button
+        android:id="@+id/btn_view_edit_inventory"
+        android:layout_width="401dp"
+        android:layout_height="68dp"
+        android:drawableLeft="@drawable/ic_action_edit"
+        android:gravity="left|center_vertical"
+        android:text="View/Edit Inventory Item" />
+
+    <Button
+        android:id="@+id/btn_add_inventory"
+        android:layout_width="401dp"
+        android:layout_height="68dp"
+        android:drawableLeft="@drawable/ic_action_add"
+        android:gravity="left|center_vertical"
+        android:text="Add New Inventory Item" />
+
+    <Button
+        android:id="@+id/btn_review_inventory"
+        android:layout_width="401dp"
+        android:layout_height="68dp"
+        android:drawableLeft="@drawable/ic_action_view"
+        android:gravity="left|center_vertical"
+        android:text="Review Inventory Item" />
+</LinearLayout>

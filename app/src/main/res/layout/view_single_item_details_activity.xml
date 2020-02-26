@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ViewSingleItemDetailsActivity">
+
+    <TextView
+        android:id="@+id/single_item_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/single_item_make_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/single_item_model_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/single_item_value_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/single_item_serial_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:textSize="24sp"/>
+
+    <Button
+        android:id="@+id/edit_single_item_button"
+        android:layout_width="100dp"
+        android:layout_height="68dp"
+        android:paddingLeft="20dp"
+        android:gravity="center_horizontal"
+        android:text="Edit Item Details"/>
+
+</LinearLayout>

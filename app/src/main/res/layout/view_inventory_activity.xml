@@ -5,12 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".ViewInventory">
+    tools:context=".ViewSingleItemDetailsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Add Content Here"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inventory_rec_view"
         android:layout_width="match_parent"
