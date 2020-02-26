@@ -1,57 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ViewSingleItemDetailsActivity">
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/single_item_name_text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"/>
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ViewSingleItemDetailsActivity">
 
-    <TextView
-        android:id="@+id/single_item_make_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/single_item_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/single_item_model_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/single_item_make_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/single_item_value_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/single_item_model_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/single_item_serial_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:layout_marginLeft="12dp"
-        android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/single_item_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_margin="12dp"
+            android:textSize="24sp"/>
 
-    <Button
-        android:id="@+id/edit_single_item_button"
-        android:layout_width="100dp"
-        android:layout_height="68dp"
-        android:paddingLeft="20dp"
-        android:gravity="center_horizontal"
-        android:text="Edit Item Details"/>
+        <TextView
+            android:id="@+id/single_item_serial_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"/>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/edit_single_item_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:background="@drawable/border"
+            android:backgroundTint="#454ebb75"
+            android:layout_margin="15dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_mode_edit_black_24dp"
+                android:contentDescription="@string/edit_icon"
+                android:padding="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textSize="24sp"
+                android:text="@string/edit_item_details" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/save_cancel_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:visibility="invisible">
+            <LinearLayout
+                android:id="@+id/save_edits_single_item_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/border"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="#5CB50C">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_save_black_24dp"
+                    android:contentDescription="@string/save_icon"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:textSize="24sp"
+                    android:text="@string/save" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cancel_edits_single_item_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/border"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="#F13A3A">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_cancel_black_24dp"
+                    android:contentDescription="@string/cancel_icon"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:textSize="24sp"
+                    android:text="@string/cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,20 +14,19 @@ import com.example.inventoryirecord.adapters.ViewItemAdapter;
 import com.example.inventoryirecord.data.DummyInventory;
 import com.example.inventoryirecord.data.InventoryItem;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ViewInventoryActivity extends AppCompatActivity implements ViewItemAdapter.OnInventoryItemClickListener {
     public final static String TAG = ViewInventoryActivity.class.getSimpleName();
-
-    private ArrayList<InventoryItem> inventoryItems;
+    private List<InventoryItem> inventoryItems;
     private ViewItemAdapter viewItemAdapter;
     private RecyclerView inventoryItemsRecyclerView;
+    private InventoryViewModel inventoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_inventory_activity);
-
         inventoryItemsRecyclerView = findViewById(R.id.inventory_rec_view);
         inventoryItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         inventoryItemsRecyclerView.setHasFixedSize(true);
@@ -33,7 +34,14 @@ public class ViewInventoryActivity extends AppCompatActivity implements ViewItem
         viewItemAdapter = new ViewItemAdapter(this);
         inventoryItemsRecyclerView.setAdapter(viewItemAdapter);
         inventoryItems = DummyInventory.generateDummyInventory(12);
-        viewItemAdapter.updateInventoryItems(inventoryItems);
+
+        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
+        inventoryViewModel.getInventoryItemList().observe(this, new Observer<List<InventoryItem>>() {
+            @Override
+            public void onChanged(List<InventoryItem> inventoryItems) {
+                viewItemAdapter.updateInventoryItems(inventoryItems);
+            }
+        });
     }
 
     @Override

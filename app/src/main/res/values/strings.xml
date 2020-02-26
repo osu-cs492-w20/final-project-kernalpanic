@@ -3,4 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="button_symbol">+</string>
     <string name="view_edit_inventory">View/Edit Inventory</string>
+    <string name="edit_item_details">Edit Item Details</string>
+    <string name="edit_icon">Edit Icon</string>
+    <string name="save">Save</string>
+    <string name="save_icon">Save Icon</string>
+    <string name="cancel_icon">Cancel Icon</string>
+    <string name="cancel">Cancel</string>
 </resources>
