@@ -30,17 +30,28 @@ public class addItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_screen);
 
-        Button addItemButton = findViewById(R.id.AddItemReceiptPhoto);
-        addItemButton.setOnClickListener(new View.OnClickListener() {
+        Button addReceiptButton = findViewById(R.id.AddItemReceiptPhoto);
+        Button addPhotoButton = findViewById(R.id.AddItemReceiptPhoto);
+
+        addReceiptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                getRecipt();
+                getPhoto();
             }
         });
 
+        addPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                getPhoto();
+            }
+        });
+
+
+
     }
 
-    public void getRecipt(){
+    public void getPhoto(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (getFromPref(this, ALLOW_KEY)) {
                 showSettingsAlert();
