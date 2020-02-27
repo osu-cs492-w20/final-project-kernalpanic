@@ -2,8 +2,10 @@ package com.example.inventoryirecord.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class InventoryItem implements Serializable {
+    public String itemID;
     public String itemName;
     public String dateAdded;
     public String datePurchased;
@@ -36,6 +38,7 @@ public class InventoryItem implements Serializable {
         this.value = builder.value;
         this.itemPics = builder.itemPics;
         this.receiptPics = builder.receiptPics;
+        this.itemID = UUID.randomUUID().toString();
     }
 
     public static class Builder {

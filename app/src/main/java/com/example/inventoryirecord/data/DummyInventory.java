@@ -1,6 +1,7 @@
 package com.example.inventoryirecord.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DummyInventory {
 
@@ -18,7 +19,7 @@ public class DummyInventory {
 
 
 
-    public static ArrayList<InventoryItem> generateDummyInventory(int number) {
+    public static List<InventoryItem> generateDummyInventory(int number) {
         ArrayList<InventoryItem> inventoryItemArrayList = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             inventoryItemArrayList.add(InventoryItem.Builder.newInstance()
