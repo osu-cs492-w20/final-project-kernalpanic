@@ -6,14 +6,25 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.inventoryirecord.data.ReceiptResult;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Intent intent;
+
+    private TextView mTextView;
+    private ShowReceiptAnalyseViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +41,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mTextView = findViewById(R.id.tv_test_network);
+
         Button addItemButton = findViewById(R.id.btn_add_inventory);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 goToAddItemScreen();
+            }
+        });
+
+        mViewModel = new ViewModelProvider(this).get(ShowReceiptAnalyseViewModel.class);
+
+        mViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
+            @Override
+            public void onChanged(ReceiptResult gitHubRepos) {
+                if (gitHubRepos != null)
+                    mTextView.setText(gitHubRepos.toString());
+            }
+        });
+
+        Button searchButton = findViewById(R.id.btn_test_network);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.loadAnalyseResults("url", "https://needreceipt.com/impImages/cafe2Var2Default.jpg");
             }
         });
     }
 
-    private void goToAddItemScreen(){
+    private void goToAddItemScreen() {
         Intent intent = new Intent(this, addItemDetailActivity.class);
         startActivity(intent);
     }

@@ -30,4 +30,14 @@
         android:drawableLeft="@drawable/ic_action_view"
         android:gravity="left|center_vertical"
         android:text="Review Inventory Item" />
+
+    <Button
+        android:id="@+id/btn_test_network"
+        android:layout_width="401dp"
+        android:layout_height="68dp"
+        android:gravity="left|center_vertical"
+        android:text="test Net Work" />
+
+
+
 </LinearLayout>
