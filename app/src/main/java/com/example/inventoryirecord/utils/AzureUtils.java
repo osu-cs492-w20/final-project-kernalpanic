@@ -16,11 +16,12 @@ public class AzureUtils {
     private final static String TYPE_BINARY = "application/octet-stream";
 
     static class AnalyseResult {
-        String Status;
-        List<UnderstandingResults> undResults;
+        String status;
+        List<UnderstandingResults> understandingResults;
     }
 
     static class UnderstandingResults {
+        Integer[] pages;
         ReceiptResult fields;
 
     }
@@ -37,8 +38,8 @@ public class AzureUtils {
 
         //TODO add other status.
 
-        if (result.Status.equals("Succeeded")) {
-            receiptResult = result.undResults.get(0).fields;
+        if (result.status.equals("Succeeded")) {
+            receiptResult = result.understandingResults.get(0).fields;
         }
 
         return receiptResult;

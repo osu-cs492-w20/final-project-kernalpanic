@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.inventoryirecord.data.ReceiptResult;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(ReceiptResult gitHubRepos) {
                 if (gitHubRepos != null)
-                    mTextView.setText(gitHubRepos.toString());
+                    mTextView.setText(new Gson().toJson(gitHubRepos));
             }
         });
 
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.loadAnalyseResults("url", "https://needreceipt.com/impImages/cafe2Var2Default.jpg");
+                mViewModel.loadAnalyseResults("url", "https://www.snopes.com/tachyon/2016/06/fsfull.jpg");
             }
         });
     }

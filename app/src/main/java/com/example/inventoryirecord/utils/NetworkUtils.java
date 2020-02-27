@@ -20,7 +20,7 @@ public class NetworkUtils {
 
     private static final OkHttpClient mHTTPClient = new OkHttpClient();
 
-    public static String doHttpPostObj(String type, String obj, String url) throws IOException {
+    public static String doHttpPostObj(String type, String obj, String url) {
         //default header key
         Request.Builder builder = new Request.Builder()
                 .header(OCP, KEY)
@@ -38,12 +38,14 @@ public class NetworkUtils {
 
         try (Response response = mHTTPClient.newCall(request).execute()) {
             return response.header("Operation-Location");
+        } catch (Exception e) {
+            return "null";
         }
     }
 
     public static String doHTTPGet(String url) throws IOException {
         Request.Builder builder = new Request.Builder().header(OCP, KEY);
-
+        url = "https://westus2.api.cognitive.microsoft.com/formrecognizer/v1.0-preview/prebuilt/receipt/operations/7c2add35-0e26-4080-af41-9a4d3b14ec58";
         Request request = builder.url(url)
                 .build();
 
