@@ -22,22 +22,12 @@
 
         <Button
             android:id="@+id/AddItemReceiptPhoto"
-            android:layout_width="110dp"
-            android:layout_height="107dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/button_gr_round"
-            android:text="@string/button_symbol"
-            android:textSize="70sp" />
+            android:layout_width="401dp"
+            android:layout_height="68dp"
+            android:drawableLeft="@drawable/ic_action_add"
+            android:gravity="left|center_vertical"
+            android:text="Add Receipt Photo" />
 
-        <TextView
-            android:id="@+id/AddItemReceiptText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="40dp"
-            android:text="Add Receipt Image"
-            android:textSize="30sp"/>
 
     </RelativeLayout>
 
@@ -49,22 +39,11 @@
 
         <Button
             android:id="@+id/AddItemPhoto"
-            android:layout_width="110dp"
-            android:layout_height="107dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/button_gr_round"
-            android:text="@string/button_symbol"
-            android:textSize="70sp" />
-
-        <TextView
-            android:id="@+id/AddItemPhotoText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="90dp"
-            android:text="Add Photo"
-            android:textSize="30sp"/>
+            android:layout_width="401dp"
+            android:layout_height="68dp"
+            android:drawableLeft="@drawable/ic_action_add"
+            android:gravity="left|center_vertical"
+            android:text="Add Object Photo"  />
 
     </RelativeLayout>
 
