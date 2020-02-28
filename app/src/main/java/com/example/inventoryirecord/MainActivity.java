@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToAddItemScreen() {
-        Intent intent = new Intent(this, addItemDetailActivity.class);
+        Intent intent = new Intent(this, AddItemDetailActivity.class);
         startActivity(intent);
     }
 
