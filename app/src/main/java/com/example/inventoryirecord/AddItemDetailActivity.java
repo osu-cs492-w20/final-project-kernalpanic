@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ public class AddItemDetailActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
 
-    private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
+    private static final String FILE_PROVIDER_AUTHORITY = "com.example.inventoryirecord.fileprovider";
 
 
     public static final String EXTRA = "data";
@@ -66,7 +67,11 @@ public class AddItemDetailActivity extends AppCompatActivity {
             addReceiptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                        getPhoto();
+                    Log.d("button", "LAdd Receipt Photo");
+
+                    String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                    requestPermissions(permissions,REQUEST_STORAGE_PERMISSION);
+                    getPhoto();
                 }
             });
         }
@@ -94,7 +99,7 @@ public class AddItemDetailActivity extends AppCompatActivity {
                 Uri photoURI = FileProvider.getUriForFile(this,
                         FILE_PROVIDER_AUTHORITY,
                         photoFile);
-                
+
                 // Add the URI so the camera can store the image
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
@@ -104,24 +109,6 @@ public class AddItemDetailActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        // Called when you request permission to read and write to external storage
-        switch (requestCode) {
-            case REQUEST_STORAGE_PERMISSION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // If you get permission, launch the camera
-                    getPhoto();
-                } else {
-                    // If you do not get permission, show a Toast
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-        }
-    }
 
     @Override
     protected void onResume() {
