@@ -1,5 +1,6 @@
 package com.example.inventoryirecord;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
 
@@ -28,6 +30,9 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     private LinearLayout itemDetailsLayout;
     private LinearLayout editItemDetailsLayout;
 
+    private InventoryItem inventoryItem;
+    private InventoryViewModel inventoryViewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +43,10 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         if(Objects.nonNull(intent) && intent.hasExtra(INVENTORY_ITEM)) {
             Log.d(TAG, "has extra");
             initAllViewHash();
-            InventoryItem inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
+            inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
 
             setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem));
-            setViewText(editTextViewHashMap, Objects.requireNonNull(inventoryItem));
+
 
         }
         editButton = findViewById(R.id.edit_single_item_button);
@@ -50,6 +55,8 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_edits_single_item_button);
         itemDetailsLayout = findViewById(R.id.view_single_item_details_layout);
         editItemDetailsLayout = findViewById(R.id.edit_single_item_details_layout);
+
+        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,15 +85,17 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         parentSaveCancelButtonsLayout.setVisibility(View.VISIBLE);
         editItemDetailsLayout.setVisibility(View.VISIBLE);
         itemDetailsLayout.setVisibility(View.INVISIBLE);
-
+        setViewText(editTextViewHashMap, Objects.requireNonNull(inventoryItem));
     }
 
     private void handleSaveForm() {
         editButton.setVisibility(View.VISIBLE);
         parentSaveCancelButtonsLayout.setVisibility(View.INVISIBLE);
-
+        getEditText(editTextViewHashMap, inventoryItem);
+        setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem));
         editItemDetailsLayout.setVisibility(View.INVISIBLE);
         itemDetailsLayout.setVisibility(View.VISIBLE);
+        inventoryViewModel.updateSingleInventoryItem(inventoryItem);
     }
     private void handleCancelForm() {
         editButton.setVisibility(View.VISIBLE);
@@ -117,6 +126,14 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(hashMap.get(TextViewKeys.MODEL)).setText(item.model);
         Objects.requireNonNull(hashMap.get(TextViewKeys.SERIAL_NUMBER)).setText(item.serialNumber);
         Objects.requireNonNull(hashMap.get(TextViewKeys.VALUE)).setText(String.valueOf(item.value));
+    }
+
+    private void getEditText(HashMap<TextViewKeys, TextView> hashMap, InventoryItem item) {
+        item.itemName = Objects.requireNonNull(hashMap.get(TextViewKeys.ITEM_NAME)).getText().toString();
+        item.make = Objects.requireNonNull(hashMap.get(TextViewKeys.MAKE)).getText().toString();
+        item.model = Objects.requireNonNull(hashMap.get(TextViewKeys.MODEL)).getText().toString();
+        item.serialNumber = Objects.requireNonNull(hashMap.get(TextViewKeys.SERIAL_NUMBER)).getText().toString();
+        item.value = Double.parseDouble(Objects.requireNonNull(hashMap.get(TextViewKeys.VALUE)).getText().toString());
     }
 
     private enum TextViewKeys {
