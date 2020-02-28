@@ -9,4 +9,9 @@
     <string name="save_icon">Save Icon</string>
     <string name="cancel_icon">Cancel Icon</string>
     <string name="cancel">Cancel</string>
+    <string name="name">Name:</string>
+    <string name="make">Make:</string>
+    <string name="model">Model:</string>
+    <string name="serial_number">Serial Number:</string>
+    <string name="value">Value:</string>
 </resources>
