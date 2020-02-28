@@ -4,97 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
 
 
-        <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
-        </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <include layout="@layout/button_layout" />
 
-    <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:background="@android:color/darker_gray" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_test_network"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="Your Inventory at a Glance"
+            android:text="showing analyse result here"
             android:textColor="#000"
             android:textSize="20sp" />
+    </ScrollView>
 
-        <LinearLayout
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Your Inventory at a Glance"
+        android:textColor="#000"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_item_stored_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="5dp"
+            android:text="Number of Item Stored: 50"
+            android:textColor="#000"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_item_stored_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Number of Item Stored: 50"
-                android:textColor="#000"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_item_total_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Total Value ofItem: $111"
+            android:textColor="#000"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_item_total_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Total Value ofItem: $111"
-                android:textColor="#000"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_receipts_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Numbers of Receipts: 10"
+            android:textColor="#000"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_receipts_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Numbers of Receipts: 10"
-                android:textColor="#000"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_pictures_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Number of Pictures: 20"
+            android:textColor="#000"
+            android:textSize="15sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_pictures_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Number of Pictures: 20"
-                android:textColor="#000"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--        android:id="@+id/fab"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_gravity="bottom|end"-->
-        <!--        android:layout_margin="@dimen/fab_margin"-->
-        <!--        app:srcCompat="@android:drawable/ic_dialog_email" />-->
-<!--    </ImageView>-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom|end"-->
+    <!--        android:layout_margin="@dimen/fab_margin"-->
+    <!--        app:srcCompat="@android:drawable/ic_dialog_email" />-->
+    <!--    </ImageView>-->
 
 </LinearLayout>
