@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.inventoryirecord">
+
     <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:allowBackup="true"
@@ -9,9 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewInventoryActivity"
+        <activity
+            android:name=".ViewInventoryActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ViewSingleItemDetailsActivity"
+        <activity
+            android:name=".ViewSingleItemDetailsActivity"
             android:parentActivityName=".ViewInventoryActivity" />
         <activity
             android:name=".addItemDetailActivity"
@@ -28,5 +31,6 @@
         </activity>
 
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
