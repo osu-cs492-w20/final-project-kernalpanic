@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.inventoryirecord.data.InventoryItem;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Objects;
 
 public class ViewSingleItemDetailsActivity extends AppCompatActivity {
@@ -21,11 +20,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     public static final String TAG = ViewSingleItemDetailsActivity.class.getSimpleName();
 
     private HashMap<TextViewKeys, TextView> textViewHashMap;
-    private TextView itemNameTextView;
-    private TextView itemMakeTextView;
-    private TextView itemModelTextView;
-    private TextView itemSerialTextView;
-    private TextView itemValueTextView;
+    private HashMap<TextViewKeys, TextView> editTextViewHashMap;
     private LinearLayout editButton;
     private LinearLayout parentSaveCancelButtonsLayout;
     private LinearLayout saveButton;
@@ -42,20 +37,12 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(Objects.nonNull(intent) && intent.hasExtra(INVENTORY_ITEM)) {
             Log.d(TAG, "has extra");
-            initViewHash();
+            initAllViewHash();
             InventoryItem inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
-            textViewHashMap.put(TextViewKeys.ITEM_NAME, (TextView) findViewById(R.id.single_item_name_text_view));
-            //itemNameTextView = findViewById(R.id.single_item_name_text_view);
-            textViewHashMap.get(TextViewKeys.ITEM_NAME).setText(String.format("Name: %s", inventoryItem != null ? inventoryItem.itemName : ""));
-            //itemNameTextView.setText(String.format("Name: %s", inventoryItem != null ? inventoryItem.itemName : ""));
-            itemMakeTextView = findViewById(R.id.single_item_make_text_view);
-            itemMakeTextView.setText(String.format("Make: %s", inventoryItem != null ? inventoryItem.make : ""));
-            itemModelTextView = findViewById(R.id.single_item_model_text_view);
-            itemModelTextView.setText(String.format("Model: %s", inventoryItem != null ? inventoryItem.model : ""));
-            itemSerialTextView = findViewById(R.id.single_item_serial_text_view);
-            itemSerialTextView.setText(String.format("Serial Number: %s", inventoryItem != null ? inventoryItem.serialNumber : ""));
-            itemValueTextView = findViewById(R.id.single_item_value_text_view);
-            itemValueTextView.setText(String.format(Locale.US, "Value: $%.2f", inventoryItem != null ? inventoryItem.value : 0.00));
+
+            setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem));
+            setViewText(editTextViewHashMap, Objects.requireNonNull(inventoryItem));
+
         }
         editButton = findViewById(R.id.edit_single_item_button);
         parentSaveCancelButtonsLayout = findViewById(R.id.save_cancel_button_layout);
@@ -109,12 +96,35 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         itemDetailsLayout.setVisibility(View.VISIBLE);
     }
 
-    private void initViewHash() {
+    private void initAllViewHash() {
         textViewHashMap = new HashMap<>();
+        textViewHashMap.put(TextViewKeys.ITEM_NAME, (TextView) findViewById(R.id.single_item_name_text_view));
+        textViewHashMap.put(TextViewKeys.MAKE, (TextView) findViewById(R.id.single_item_make_text_view));
+        textViewHashMap.put(TextViewKeys.MODEL, (TextView) findViewById(R.id.single_item_model_text_view));
+        textViewHashMap.put(TextViewKeys.SERIAL_NUMBER, (TextView) findViewById(R.id.single_item_serial_text_view));
+        textViewHashMap.put(TextViewKeys.VALUE, (TextView) findViewById(R.id.single_item_value_text_view));
+
+        editTextViewHashMap = new HashMap<>();
+        editTextViewHashMap.put(TextViewKeys.ITEM_NAME, (EditText) findViewById(R.id.edit_single_item_name_text_view));
+        editTextViewHashMap.put(TextViewKeys.MAKE, (EditText) findViewById(R.id.edit_single_item_make_text_view));
+        editTextViewHashMap.put(TextViewKeys.MODEL, (EditText) findViewById(R.id.edit_single_item_model_text_view));
+        editTextViewHashMap.put(TextViewKeys.SERIAL_NUMBER, (EditText) findViewById(R.id.edit_single_item_serial_text_view));
+        editTextViewHashMap.put(TextViewKeys.VALUE, (EditText) findViewById(R.id.edit_single_item_value_text_view));
+    }
+    private void setViewText(HashMap<TextViewKeys, TextView> hashMap, InventoryItem item) {
+        Objects.requireNonNull(hashMap.get(TextViewKeys.ITEM_NAME)).setText(item.itemName);
+        Objects.requireNonNull(hashMap.get(TextViewKeys.MAKE)).setText(item.make);
+        Objects.requireNonNull(hashMap.get(TextViewKeys.MODEL)).setText(item.model);
+        Objects.requireNonNull(hashMap.get(TextViewKeys.SERIAL_NUMBER)).setText(item.serialNumber);
+        Objects.requireNonNull(hashMap.get(TextViewKeys.VALUE)).setText(String.valueOf(item.value));
     }
 
     private enum TextViewKeys {
-        ITEM_NAME
+        ITEM_NAME,
+        MAKE,
+        MODEL,
+        SERIAL_NUMBER,
+        VALUE
     }
 
 }
