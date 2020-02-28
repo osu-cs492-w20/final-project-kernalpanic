@@ -1,17 +1,15 @@
 package com.example.inventoryirecord.data;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.inventoryirecord.utils.AzureUtils;
 import com.example.inventoryirecord.utils.NetworkUtils;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.security.auth.callback.Callback;
 
 public class AzureReceiptAnalyseAsyncTask extends AsyncTask<String, Void, String> {
-
+    private static final String TAG = AnalyzeResultStatus.class.getSimpleName();
     private Callback mCallback;
 
     public interface Callback {
@@ -24,15 +22,27 @@ public class AzureReceiptAnalyseAsyncTask extends AsyncTask<String, Void, String
 
     @Override
     protected String doInBackground(String... strings) {
-        String type = strings[0];
-        String obj = strings[1];
-        String url = strings[2];
+        String filePath = strings[0];
+        String url = strings[1];
         String analyseResults = null;
         try {
-            String resultUrl = NetworkUtils.doHttpPostObj(type, obj, url);
+
+            String resultUrl = NetworkUtils.doHttpPostObj(filePath, url);
 
             analyseResults = NetworkUtils.doHTTPGet(resultUrl);
-        } catch (IOException e) {
+
+            while (!analyseResults.contains(AnalyzeResultStatus.Succeeded.toString())) {
+                /// analyse failed
+                if (analyseResults.contains(AnalyzeResultStatus.Failed.toString())) {
+                    return null;
+                }
+                Log.d(TAG, "analyseStatus" + analyseResults);
+                // if analyze is processing, wait for 1 second
+                Thread.sleep(1000);
+                analyseResults = NetworkUtils.doHTTPGet(resultUrl);
+
+            }
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return analyseResults;

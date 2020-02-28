@@ -47,14 +47,14 @@ public class AzureReceiptAnalyseRepository implements AzureReceiptAnalyseAsyncTa
         return !TextUtils.equals(query, mCurrentQuery);
     }
 
-    public void loadAnalyseResults(String type, String obj) {
-        if (shouldExecuteAnalyse(type + obj)) {
-            mCurrentQuery = type + obj;
+    public void loadAnalyseResults(String filePath) {
+        if (shouldExecuteAnalyse(filePath)) {
+            mCurrentQuery = filePath;
             String url = AzureUtils.getReceiptAnalysePOSTURL();
             mAnalyseResults.setValue(null);
-            Log.d(TAG, "executing Analyse with url: " + url);
+            Log.d(TAG, "executing Analyse with url: " + url + "and file path in:" + filePath);
             mLoadingStatus.setValue(Status.LOADING);
-            new AzureReceiptAnalyseAsyncTask(this).execute(type, obj, url);
+            new AzureReceiptAnalyseAsyncTask(this).execute(filePath, url);
         } else {
             Log.d(TAG, "using cached Analyse results");
         }

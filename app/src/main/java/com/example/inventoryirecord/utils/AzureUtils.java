@@ -2,21 +2,17 @@ package com.example.inventoryirecord.utils;
 
 import android.net.Uri;
 
+import com.example.inventoryirecord.data.AnalyzeResultStatus;
 import com.example.inventoryirecord.data.ReceiptResult;
 import com.google.gson.Gson;
 
 import java.util.List;
 
-// Work in progress. Finish camera first.
 public class AzureUtils {
-    private final static String OBJ__BASE_URL = "https://stuff.cognitiveservices.azure.com/vision/v2.0/analyze?visualFeatures=Description";
     private final static String RECEIPT_BASE_URL = "https://recieptcv.cognitiveservices.azure.com/formrecognizer/v1.0-preview/prebuilt/receipt/asyncBatchAnalyze";
-    private final static String TXT_BASE_URL = "https://stuff.cognitiveservices.azure.com/vision/v2.0/recognizeText?mode=Printed";
-    private final static String TYPE_JSON = "application/json";
-    private final static String TYPE_BINARY = "application/octet-stream";
 
     static class AnalyseResult {
-        String status;
+        AnalyzeResultStatus status;
         List<UnderstandingResults> understandingResults;
     }
 
@@ -36,9 +32,7 @@ public class AzureUtils {
         AnalyseResult result = gson.fromJson(receiptJson, AnalyseResult.class);
         ReceiptResult receiptResult = new ReceiptResult();
 
-        //TODO add other status.
-
-        if (result.status.equals("Succeeded")) {
+        if (result.status.equals(AnalyzeResultStatus.Succeeded)) {
             receiptResult = result.understandingResults.get(0).fields;
         }
 
