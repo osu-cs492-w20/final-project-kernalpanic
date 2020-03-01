@@ -42,7 +42,7 @@ public class AddItemDetailActivity extends AppCompatActivity {
     private Button mStartCamera;
     private String mTempPhotoPath;
     private Bitmap mResultsBitmap;
-    private FloatingActionButton mSave;
+    private FloatingActionButton mSave, mCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +51,14 @@ public class AddItemDetailActivity extends AppCompatActivity {
         final Context context = this;
 
         mAppExcutor = new AppExecutor();
-        mImageView =findViewById(R.id.imageView);
+        mImageView = findViewById(R.id.imageView);
         mImageView.setVisibility(View.GONE);
 
         mSave = (FloatingActionButton) findViewById(R.id.Save);
         mSave.setVisibility(View.GONE);
+
+        mCancel = (FloatingActionButton) findViewById(R.id.cancel);
+        mCancel.setVisibility(View.GONE);
 
         Button addReceiptButton = findViewById(R.id.AddItemReceiptPhoto);
         //Button addPhotoButton = findViewById(R.id.AddItemReceiptPhoto);
@@ -79,12 +82,24 @@ public class AddItemDetailActivity extends AppCompatActivity {
                     getPhoto();
                 }
             });
+
         }
         mSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 BitmapUtils.deleteImageFile(context, mTempPhotoPath);
                 BitmapUtils.saveImage(context, mResultsBitmap);
+                mSave.setVisibility(View.GONE);
+                mImageView.setVisibility(View.GONE);
+            }
+        });
+        mCancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                BitmapUtils.deleteImageFile(context, mTempPhotoPath);
+                mSave.setVisibility(View.GONE);
+                mCancel.setVisibility(View.GONE);
+                mImageView.setVisibility(View.GONE);
             }
         });
     }
@@ -136,6 +151,7 @@ public class AddItemDetailActivity extends AppCompatActivity {
 
     private void processAndSetImage(){
         mSave.setVisibility(View.VISIBLE);
+        mCancel.setVisibility(View.VISIBLE);
         mImageView.setVisibility(View.VISIBLE);
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
         mImageView.setImageBitmap(mResultsBitmap);

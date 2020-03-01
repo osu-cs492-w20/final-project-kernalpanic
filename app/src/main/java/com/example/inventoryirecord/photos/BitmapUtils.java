@@ -76,7 +76,7 @@ public class BitmapUtils {
             galleryAddPic(context, savedImagePath);
 
             // Show a Toast with the save location
-            String savedMessage = context.getString(R.string.saved_message, savedImagePath);
+            //String savedMessage = context.getString(R.string.saved_message, savedImagePath);
 
         }
         return savedImagePath;

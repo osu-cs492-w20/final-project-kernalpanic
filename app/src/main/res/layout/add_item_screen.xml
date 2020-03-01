@@ -46,16 +46,32 @@
             android:text="Add Object Photo"  />
 
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/AddItemRelativeLayout3"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Save"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_action_add" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_action_add" />
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/Save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@drawable/ic_action_add" />
 </LinearLayout>
