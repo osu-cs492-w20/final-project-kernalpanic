@@ -49,6 +49,25 @@
                         android:paddingTop="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
+                        android:text="@string/type"/>
+                    <TextView
+                        android:id="@+id/single_item_type_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
                         android:text="@string/make"/>
                     <TextView
                         android:id="@+id/single_item_make_text_view"
@@ -106,9 +125,66 @@
                         android:paddingTop="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
+                        android:text="@string/price_paid"/>
+                    <TextView
+                        android:id="@+id/single_item_price_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/bought_new"/>
+                    <TextView
+                        android:id="@+id/single_item_new_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
                         android:text="@string/serial_number"/>
                     <TextView
                         android:id="@+id/single_item_serial_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/date_of_purchase"/>
+                    <TextView
+                        android:id="@+id/single_item_date_purch_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="4dp"
@@ -154,11 +230,35 @@
                         android:paddingTop="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
+                        android:text="@string/type"/>
+                    <EditText
+                        android:id="@+id/edit_single_item_type_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:autofillHints="Enter a string for the item type."
+                        android:labelFor="@id/edit_single_item_type_text_view"
+                        android:paddingTop="4dp"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
                         android:text="@string/make"/>
                     <EditText
                         android:id="@+id/edit_single_item_make_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_make_text_view"
+                        android:autofillHints="Enter a string for the item Make"
                         android:paddingTop="4dp"
                         android:inputType="text"
                         android:textSize="24sp"/>
@@ -179,6 +279,8 @@
                         android:id="@+id/edit_single_item_model_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_model_text_view"
+                        android:autofillHints="@string/model"
                         android:paddingTop="4dp"
                         android:inputType="text"
                         android:textSize="24sp"/>
@@ -199,9 +301,60 @@
                         android:id="@+id/edit_single_item_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_value_text_view"
+                        android:autofillHints="Enter value amount."
                         android:paddingTop="4dp"
                         android:inputType="numberDecimal"
                         android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/price_paid"/>
+                    <EditText
+                        android:id="@+id/edit_single_item_price_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_price_text_view"
+                        android:autofillHints="Enter price amount."
+                        android:paddingTop="4dp"
+                        android:inputType="numberDecimal"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/bought_new"/>
+                    <CheckBox
+                        android:id="@+id/edit_single_item_new_check_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp" />
+<!--                    <EditText-->
+<!--                        android:id="@+id/edit_single_item_new_text_view"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:labelFor="@id/edit_single_item_new_text_view"-->
+<!--                        android:autofillHints="Was item new?"-->
+<!--                        android:paddingTop="4dp"-->
+<!--                        android:inputType="text"-->
+<!--                        android:textSize="24sp"/>-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -219,9 +372,34 @@
                         android:id="@+id/edit_single_item_serial_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_serial_text_view"
+                        android:autofillHints="Enter the serial number."
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:inputType="text"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/date_of_purchase"/>
+                    <EditText
+                        android:id="@+id/edit_single_item_date_purch_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edit_single_item_date_purch_text_view"
+                        android:autofillHints="Enter the date of item purchase."
+                        android:padding="4dp"
+                        android:layout_marginStart="12dp"
+                        android:inputType="date"
                         android:textSize="24sp"/>
                 </LinearLayout>
             </LinearLayout>
