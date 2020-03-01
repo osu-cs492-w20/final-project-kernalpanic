@@ -2,6 +2,7 @@ package com.example.inventoryirecord;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -13,9 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,11 +22,11 @@ import androidx.core.content.FileProvider;
 
 import com.example.inventoryirecord.photos.AppExecutor;
 import com.example.inventoryirecord.photos.BitmapUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class AddItemDetailActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -43,18 +42,24 @@ public class AddItemDetailActivity extends AppCompatActivity {
     private Button mStartCamera;
     private String mTempPhotoPath;
     private Bitmap mResultsBitmap;
+    private FloatingActionButton mSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item_screen);
+        final Context context = this;
 
         mAppExcutor = new AppExecutor();
         mImageView =findViewById(R.id.imageView);
         mImageView.setVisibility(View.GONE);
 
+        mSave = (FloatingActionButton) findViewById(R.id.Save);
+        mSave.setVisibility(View.GONE);
+
         Button addReceiptButton = findViewById(R.id.AddItemReceiptPhoto);
         //Button addPhotoButton = findViewById(R.id.AddItemReceiptPhoto);
+
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -75,6 +80,13 @@ public class AddItemDetailActivity extends AppCompatActivity {
                 }
             });
         }
+        mSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                BitmapUtils.deleteImageFile(context, mTempPhotoPath);
+                BitmapUtils.saveImage(context, mResultsBitmap);
+            }
+        });
     }
 
     public void getPhoto() {
@@ -109,11 +121,28 @@ public class AddItemDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // If the image capture activity was called and was successful
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Process the image and set it to the TextView
+            processAndSetImage();
+        } else {
+            // Otherwise, delete the temporary image file
+            BitmapUtils.deleteImageFile(this, mTempPhotoPath);
+        }
+    }
+
+    private void processAndSetImage(){
+        mSave.setVisibility(View.VISIBLE);
+        mImageView.setVisibility(View.VISIBLE);
+        mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
+        mImageView.setImageBitmap(mResultsBitmap);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
     }
-
-
 }

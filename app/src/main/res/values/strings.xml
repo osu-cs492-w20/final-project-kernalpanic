@@ -9,4 +9,6 @@
     <string name="save_icon">Save Icon</string>
     <string name="cancel_icon">Cancel Icon</string>
     <string name="cancel">Cancel</string>
+    <string name="file_error">Error deleting temp file.</string>
+    <string name="saved_message">Image Saved</string>
 </resources>
