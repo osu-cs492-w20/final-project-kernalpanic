@@ -1,4 +1,4 @@
-package com.example.inventoryirecord.data;
+package com.example.inventoryirecord.data.azure;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -7,6 +7,8 @@ import com.example.inventoryirecord.utils.AzureUtils;
 import com.example.inventoryirecord.utils.NetworkUtils;
 
 import java.io.IOException;
+
+import okhttp3.Response;
 
 public class AzureReceiptAnalyseAsyncTask extends AsyncTask<String, Void, String> {
     private static final String TAG = AnalyzeResultStatus.class.getSimpleName();
@@ -24,12 +26,18 @@ public class AzureReceiptAnalyseAsyncTask extends AsyncTask<String, Void, String
     protected String doInBackground(String... strings) {
         String filePath = strings[0];
         String url = strings[1];
+        String key = strings[2];
         String analyseResults = null;
         try {
+            String resultUrl = null;
 
-            String resultUrl = NetworkUtils.doHttpPostObj(filePath, url);
 
-            analyseResults = NetworkUtils.doHTTPGet(resultUrl);
+            Response response = NetworkUtils.geHttpPostResponse(filePath, url, key);
+            if (response != null) {
+                resultUrl = response.header("Operation-Location");
+            }
+
+            analyseResults = NetworkUtils.doHTTPGet(resultUrl, key);
 
             while (!analyseResults.contains(AnalyzeResultStatus.Succeeded.toString())) {
                 /// analyse failed
@@ -39,7 +47,7 @@ public class AzureReceiptAnalyseAsyncTask extends AsyncTask<String, Void, String
                 Log.d(TAG, "analyseStatus" + analyseResults);
                 // if analyze is processing, wait for 1 second
                 Thread.sleep(1000);
-                analyseResults = NetworkUtils.doHTTPGet(resultUrl);
+                analyseResults = NetworkUtils.doHTTPGet(resultUrl, key);
 
             }
         } catch (IOException | InterruptedException e) {

@@ -1,4 +1,4 @@
-package com.example.inventoryirecord.data;
+package com.example.inventoryirecord.data.azure;
 
 public class ResultDataItem {
     public String valueType;

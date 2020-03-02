@@ -36,6 +36,13 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:gravity="left|center_vertical"
-        android:text="test azure" />
+        android:text="test azure receipt" />
+
+    <Button
+        android:id="@+id/btn_test_object"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="left|center_vertical"
+        android:text="test azure object" />
 
 </LinearLayout>
