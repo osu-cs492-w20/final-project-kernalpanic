@@ -8,7 +8,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".ViewSingleItemDetailsActivity">
+        tools:context=".ViewSingleItemDetailsActivity"
+        android:background="@drawable/background">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -27,7 +29,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/name"/>
@@ -35,7 +37,7 @@
                         android:id="@+id/single_item_name_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp" />
                 </LinearLayout>
 
@@ -46,7 +48,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/type"/>
@@ -54,7 +56,7 @@
                         android:id="@+id/single_item_type_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp" />
                 </LinearLayout>
 
@@ -65,7 +67,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/make"/>
@@ -73,7 +75,7 @@
                         android:id="@+id/single_item_make_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -84,7 +86,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/model"/>
@@ -92,7 +94,7 @@
                         android:id="@+id/single_item_model_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -103,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/value"/>
@@ -111,7 +113,7 @@
                         android:id="@+id/single_item_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -122,7 +124,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/price_paid"/>
@@ -130,7 +132,7 @@
                         android:id="@+id/single_item_price_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -141,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/bought_new"/>
@@ -149,7 +151,7 @@
                         android:id="@+id/single_item_new_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -160,7 +162,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/serial_number"/>
@@ -168,7 +170,7 @@
                         android:id="@+id/single_item_serial_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
 
@@ -179,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
                         android:text="@string/date_of_purchase"/>
@@ -187,226 +189,64 @@
                         android:id="@+id/single_item_date_purch_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
+                        android:padding="4dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/date_manufactured"/>
+                    <TextView
+                        android:id="@+id/single_item_date_manu_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:layout_marginStart="12dp"
+                        android:textSize="24sp"
+                        android:text="@string/notes"/>
+                    <TextView
+                        android:id="@+id/single_item_notes_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
                         android:textSize="24sp"/>
                 </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/edit_single_item_details_layout"
+            <fragment
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="invisible">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/name" />
-                    <EditText
-                        android:id="@+id/edit_single_item_name_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:inputType="text"
-                        android:textSize="24sp"
-                        android:autofillHints="Enter a string for item name."
-                        android:labelFor="@id/edit_single_item_name_text_view"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/type"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_type_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:autofillHints="Enter a string for the item type."
-                        android:labelFor="@id/edit_single_item_type_text_view"
-                        android:paddingTop="4dp"
-                        android:textSize="24sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/make"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_make_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_make_text_view"
-                        android:autofillHints="Enter a string for the item Make"
-                        android:paddingTop="4dp"
-                        android:inputType="text"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/model"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_model_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_model_text_view"
-                        android:autofillHints="@string/model"
-                        android:paddingTop="4dp"
-                        android:inputType="text"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/value"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_value_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_value_text_view"
-                        android:autofillHints="Enter value amount."
-                        android:paddingTop="4dp"
-                        android:inputType="numberDecimal"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/price_paid"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_price_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_price_text_view"
-                        android:autofillHints="Enter price amount."
-                        android:paddingTop="4dp"
-                        android:inputType="numberDecimal"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/bought_new"/>
-                    <CheckBox
-                        android:id="@+id/edit_single_item_new_check_box"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp" />
-<!--                    <EditText-->
-<!--                        android:id="@+id/edit_single_item_new_text_view"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:labelFor="@id/edit_single_item_new_text_view"-->
-<!--                        android:autofillHints="Was item new?"-->
-<!--                        android:paddingTop="4dp"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textSize="24sp"/>-->
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/serial_number"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_serial_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_serial_text_view"
-                        android:autofillHints="Enter the serial number."
-                        android:padding="4dp"
-                        android:layout_marginStart="12dp"
-                        android:inputType="text"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="4dp"
-                        android:layout_marginStart="12dp"
-                        android:textSize="24sp"
-                        android:text="@string/date_of_purchase"/>
-                    <EditText
-                        android:id="@+id/edit_single_item_date_purch_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@id/edit_single_item_date_purch_text_view"
-                        android:autofillHints="Enter the date of item purchase."
-                        android:padding="4dp"
-                        android:layout_marginStart="12dp"
-                        android:inputType="date"
-                        android:textSize="24sp"/>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:id="@+id/edit_add_item_fragment"
+                android:name="com.example.inventoryirecord.EditAddItemFragment"/>
+<!--            <include layout="@layout/form_edit_item_layout" />-->
         </FrameLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/edit_delete_buttons_layout"
+                android:visibility="visible">
             <LinearLayout
                 android:id="@+id/edit_single_item_button"
                 android:layout_width="match_parent"
@@ -414,9 +254,8 @@
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 android:background="@drawable/border"
-                android:backgroundTint="#454ebb75"
-                android:layout_margin="15dp"
-                android:visibility="visible">
+                android:backgroundTint="#834EBB75"
+                android:layout_margin="15dp">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -435,31 +274,23 @@
                     android:text="@string/edit_item_details" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/save_cancel_button_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="15dp"
-                android:visibility="invisible">
                 <LinearLayout
-                    android:id="@+id/save_edits_single_item_button"
+                    android:id="@+id/delete_single_item_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center_horizontal"
                     android:background="@drawable/border"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="#5CB50C">
+                    android:backgroundTint="#F44336"
+                    android:layout_margin="15dp"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_save_black_24dp"
-                        android:contentDescription="@string/save_icon"
+                        android:src="@drawable/ic_delete_black_24dp"
+                        android:contentDescription="@string/edit_icon"
                         android:padding="8dp" />
 
                     <TextView
@@ -468,36 +299,11 @@
                         android:gravity="center_vertical"
                         android:padding="8dp"
                         android:textSize="24sp"
-                        android:text="@string/save" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/cancel_edits_single_item_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/border"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="#F13A3A">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_cancel_black_24dp"
-                        android:contentDescription="@string/cancel_icon"
-                        android:padding="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:padding="8dp"
-                        android:textSize="24sp"
-                        android:text="@string/cancel" />
+                        android:text="@string/delete_item" />
                 </LinearLayout>
             </LinearLayout>
+
+            <include layout="@layout/form_save_cancel_buttons" />
         </FrameLayout>
     </LinearLayout>
 </ScrollView>

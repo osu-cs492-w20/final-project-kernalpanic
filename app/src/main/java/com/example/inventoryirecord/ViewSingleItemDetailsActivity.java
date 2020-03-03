@@ -1,5 +1,7 @@
 package com.example.inventoryirecord;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,21 +11,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.inventoryirecord.data.InventoryEditForm;
 import com.example.inventoryirecord.data.InventoryItem;
 
 import java.util.HashMap;
 import java.util.Objects;
 
+import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.DATE_MANU;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.DATE_PURCH;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.ITEM_NAME;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.ITEM_TYPE;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.MAKE;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.MODEL;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.NEW;
+import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.NOTES;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.PRICE_PAID;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.SERIAL_NUMBER;
 import static com.example.inventoryirecord.ViewSingleItemDetailsActivity.TextViewKeys.VALUE;
@@ -32,15 +36,14 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     public static final String INVENTORY_ITEM = "singleInventoryItem";
     public static final String TAG = ViewSingleItemDetailsActivity.class.getSimpleName();
 
+    private AlertDialog.Builder alertDialog;
+
     private HashMap<TextViewKeys, TextView> textViewHashMap;
     private HashMap<TextViewKeys, TextView> editTextViewHashMap;
-    private LinearLayout editButton;
+    private LinearLayout editDeleteButtonsLayout;
     private LinearLayout parentSaveCancelButtonsLayout;
     private LinearLayout itemDetailsLayout;
     private LinearLayout editItemDetailsLayout;
-
-    InventoryEditForm inventoryEditForm;
-
     private CheckBox newCheckBox;
 
     private InventoryItem inventoryItem;
@@ -50,8 +53,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_single_item_details_activity);
-
-
         Intent intent = getIntent();
         if(Objects.nonNull(intent) && intent.hasExtra(INVENTORY_ITEM)) {
             Log.d(TAG, "has extra");
@@ -60,17 +61,18 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
 
             setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
 
-
         }
-        editButton = findViewById(R.id.edit_single_item_button);
+        LinearLayout editButton = findViewById(R.id.edit_single_item_button);
         parentSaveCancelButtonsLayout = findViewById(R.id.save_cancel_button_layout);
         LinearLayout saveButton = findViewById(R.id.save_edits_single_item_button);
         LinearLayout cancelButton = findViewById(R.id.cancel_edits_single_item_button);
+        LinearLayout deleteButton = findViewById(R.id.delete_single_item_button);
+        editDeleteButtonsLayout = findViewById(R.id.edit_delete_buttons_layout);
         itemDetailsLayout = findViewById(R.id.view_single_item_details_layout);
-        editItemDetailsLayout = findViewById(R.id.edit_single_item_details_layout);
-
+        editItemDetailsLayout = findViewById(R.id.edit_add_item_fragment);
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
-        inventoryEditForm = new InventoryEditForm(this);
+
+        alertDialog = new AlertDialog.Builder(this);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,27 +94,52 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
                 handleCancelForm();
             }
         });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleDeleteItem();
+            }
+        });
+    }
+
+    private void handleDeleteItem() {
+        alertDialog.setTitle("Delete Item")
+                .setMessage("Are you sure that you want to permanently delete this item?")
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        inventoryViewModel.deleteSingleInventoryItem(inventoryItem);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 
     private void handleEditForm() {
-        editButton.setVisibility(View.INVISIBLE);
+        editDeleteButtonsLayout.setVisibility(View.INVISIBLE);
         parentSaveCancelButtonsLayout.setVisibility(View.VISIBLE);
         editItemDetailsLayout.setVisibility(View.VISIBLE);
         itemDetailsLayout.setVisibility(View.INVISIBLE);
-        setViewText(inventoryEditForm.getEditTextViewHashMap(), Objects.requireNonNull(inventoryItem), true);
+        setViewText(editTextViewHashMap, Objects.requireNonNull(inventoryItem), true);
     }
 
     private void handleSaveForm() {
-        editButton.setVisibility(View.VISIBLE);
+        editDeleteButtonsLayout.setVisibility(View.VISIBLE);
         parentSaveCancelButtonsLayout.setVisibility(View.INVISIBLE);
-        inventoryItem = inventoryEditForm.getEditText();
+        getEditText(editTextViewHashMap, inventoryItem);
         setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
         editItemDetailsLayout.setVisibility(View.INVISIBLE);
         itemDetailsLayout.setVisibility(View.VISIBLE);
         inventoryViewModel.updateSingleInventoryItem(inventoryItem);
     }
     private void handleCancelForm() {
-        editButton.setVisibility(View.VISIBLE);
+        editDeleteButtonsLayout.setVisibility(View.VISIBLE);
         parentSaveCancelButtonsLayout.setVisibility(View.INVISIBLE);
 
         editItemDetailsLayout.setVisibility(View.INVISIBLE);
@@ -130,6 +157,8 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         textViewHashMap.put(DATE_PURCH, (TextView) findViewById(DATE_PURCH.viewId));
         textViewHashMap.put(PRICE_PAID, (TextView) findViewById(PRICE_PAID.viewId));
         textViewHashMap.put(NEW, (TextView) findViewById(NEW.viewId));
+        textViewHashMap.put(NOTES, (TextView) findViewById(NOTES.viewId));
+        textViewHashMap.put(DATE_MANU, (TextView) findViewById(DATE_MANU.viewId));
 
         newCheckBox = findViewById(NEW.editId);
 
@@ -142,6 +171,8 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         editTextViewHashMap.put(VALUE, (EditText) findViewById(VALUE.editId));
         editTextViewHashMap.put(DATE_PURCH, (EditText) findViewById(DATE_PURCH.editId));
         editTextViewHashMap.put(PRICE_PAID, (EditText) findViewById(PRICE_PAID.editId));
+        editTextViewHashMap.put(NOTES, (EditText) findViewById(NOTES.editId));
+        editTextViewHashMap.put(DATE_MANU, (EditText) findViewById(DATE_MANU.editId));
 
     }
     private void setViewText(HashMap<TextViewKeys, TextView> hashMap, InventoryItem item, boolean edit) {
@@ -153,6 +184,8 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         Objects.requireNonNull(hashMap.get(VALUE)).setText(String.valueOf(item.value));
         Objects.requireNonNull(hashMap.get(DATE_PURCH)).setText(String.valueOf(item.datePurchased));
         Objects.requireNonNull(hashMap.get(PRICE_PAID)).setText(String.valueOf(item.pricePaid));
+        Objects.requireNonNull(hashMap.get(NOTES)).setText(item.otherNotes);
+        Objects.requireNonNull(hashMap.get(DATE_MANU)).setText(item.dateOfManufacture);
         if (edit) {
             newCheckBox.setChecked(item.newItem);
         } else {
@@ -169,7 +202,9 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         item.value = Double.parseDouble(Objects.requireNonNull(hashMap.get(VALUE)).getText().toString());
         item.datePurchased = Objects.requireNonNull(hashMap.get(DATE_PURCH)).getText().toString();
         item.pricePaid = Double.parseDouble(Objects.requireNonNull(hashMap.get(PRICE_PAID)).getText().toString());
+        item.otherNotes = Objects.requireNonNull(hashMap.get(NOTES)).getText().toString();
         item.newItem = newCheckBox.isChecked();
+        item.dateOfManufacture = Objects.requireNonNull(hashMap.get(DATE_MANU)).getText().toString();
     }
 
     public enum TextViewKeys {
@@ -180,9 +215,9 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         SERIAL_NUMBER(R.id.single_item_serial_text_view, R.id.edit_single_item_serial_text_view),
         VALUE(R.id.single_item_value_text_view, R.id.edit_single_item_value_text_view),
         DATE_PURCH(R.id.single_item_date_purch_text_view, R.id.edit_single_item_date_purch_text_view),
-        DATE_MANU(1,1),
-        DATE_ADD(1,1),
-        NOTES(1,1),
+        DATE_MANU(R.id.single_item_date_manu_text_view,R.id.edit_single_item_date_manu_text_view),
+        //DATE_ADD(1,1),
+        NOTES(R.id.single_item_notes_text_view, R.id.edit_single_item_notes_text_view),
         PRICE_PAID(R.id.single_item_price_text_view, R.id.edit_single_item_price_text_view),
         NEW(R.id.single_item_new_text_view, R.id.edit_single_item_new_check_box);
 
