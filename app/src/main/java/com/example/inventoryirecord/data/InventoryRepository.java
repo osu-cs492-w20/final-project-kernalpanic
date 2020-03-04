@@ -38,6 +38,7 @@ public class InventoryRepository {
                 break;
             }
         }
+        listMutableLiveData.setValue(inventoryItemList);
     }
 
     public void deleteSingleInventoryItem(InventoryItem deleteItem) {
@@ -47,5 +48,6 @@ public class InventoryRepository {
                 break;
             }
         }
+        listMutableLiveData.setValue(inventoryItemList);
     }
 }

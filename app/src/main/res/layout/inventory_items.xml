@@ -10,7 +10,15 @@
         android:id="@+id/inventory_items_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="15dp"/>
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"/>
+
+    <TextView
+        android:id="@+id/inventory_items_type_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"/>
 
     <TextView
         android:id="@+id/inventory_items_make_text_view"

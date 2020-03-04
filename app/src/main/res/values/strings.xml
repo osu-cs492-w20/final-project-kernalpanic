@@ -14,4 +14,11 @@
     <string name="model">Model:</string>
     <string name="serial_number">Serial Number:</string>
     <string name="value">Value:</string>
+    <string name="type">Type:</string>
+    <string name="date_of_purchase">Date of Purchase:</string>
+    <string name="price_paid">Price Paid:</string>
+    <string name="bought_new">Bought New:</string>
+    <string name="notes">Notes:</string>
+    <string name="delete_item">Delete Item</string>
+    <string name="date_manufactured">Date Manufactured:</string>
 </resources>

@@ -56,11 +56,13 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.Invent
     class InventoryItemsViewHolder extends RecyclerView.ViewHolder {
         private TextView itemNameTextView;
         private TextView itemMakeTextView;
+        private TextView itemTypeTextView;
 
         InventoryItemsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemNameTextView = itemView.findViewById(R.id.inventory_items_name_text_view);
             itemMakeTextView = itemView.findViewById(R.id.inventory_items_make_text_view);
+            itemTypeTextView = itemView.findViewById(R.id.inventory_items_type_text_view);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,6 +74,7 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.Invent
         void bind(InventoryItem item) {
             itemNameTextView.setText(item.itemName);
             itemMakeTextView.setText(item.make);
+            itemTypeTextView.setText(item.itemType);
         }
     }
 }
