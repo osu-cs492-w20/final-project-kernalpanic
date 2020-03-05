@@ -21,4 +21,8 @@
     <string name="notes">Notes:</string>
     <string name="delete_item">Delete Item</string>
     <string name="date_manufactured">Date Manufactured:</string>
+    <string name="view_photos">View/Edit Photos</string>
+    <string name="button_to_add_image">Button to add Image.</string>
+    <string name="button_to_view_photos">Button to View photos</string>
+    <string name="find_a_photo_to_add">Find a photo to add</string>
 </resources>

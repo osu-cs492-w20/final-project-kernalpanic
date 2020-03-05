@@ -1,9 +1,10 @@
 package com.example.inventoryirecord;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -11,11 +12,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -54,52 +58,65 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_single_item_details_activity);
         Intent intent = getIntent();
-        if(Objects.nonNull(intent) && intent.hasExtra(INVENTORY_ITEM)) {
+        if (Objects.nonNull(intent) && intent.hasExtra(INVENTORY_ITEM)) {
             Log.d(TAG, "has extra");
-            initAllViewHash();
             inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
-
-            setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
-
         }
+        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
+        if(inventoryItem == null) {
+            inventoryItem = inventoryViewModel.getTempInventoryItem();
+        }
+        initAllViewHash();
+        setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
+
         LinearLayout editButton = findViewById(R.id.edit_single_item_button);
         parentSaveCancelButtonsLayout = findViewById(R.id.save_cancel_button_layout);
         LinearLayout saveButton = findViewById(R.id.save_edits_single_item_button);
         LinearLayout cancelButton = findViewById(R.id.cancel_edits_single_item_button);
         LinearLayout deleteButton = findViewById(R.id.delete_single_item_button);
+        LinearLayout viewPhotosButton = findViewById(R.id.view_photos_layout_button);
         editDeleteButtonsLayout = findViewById(R.id.edit_delete_buttons_layout);
         itemDetailsLayout = findViewById(R.id.view_single_item_details_layout);
         editItemDetailsLayout = findViewById(R.id.edit_add_item_fragment);
-        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
 
-        alertDialog = new AlertDialog.Builder(this);
+            alertDialog = new AlertDialog.Builder(this);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleEditForm();
-            }
-        });
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleEditForm();
+                }
+            });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleSaveForm();
-            }
-        });
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleSaveForm();
+                }
+            });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleCancelForm();
-            }
-        });
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleDeleteItem();
-            }
-        });
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleCancelForm();
+                }
+            });
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleDeleteItem();
+                }
+            });
+
+            viewPhotosButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handlePhotoButtonClick();
+                }
+            });
+
+
+
     }
 
     private void handleDeleteItem() {
@@ -119,6 +136,13 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private void handlePhotoButtonClick() {
+        storeActivityItem();
+        Intent photosActivity = new Intent(this, ViewEditPhotosActivity.class);
+        photosActivity.putExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM, inventoryItem);
+        startActivity(photosActivity);
     }
 
     private void handleEditForm() {
@@ -230,4 +254,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void storeActivityItem() {
+        inventoryViewModel.tempStoreInventoryItem(inventoryItem);
+    }
 }

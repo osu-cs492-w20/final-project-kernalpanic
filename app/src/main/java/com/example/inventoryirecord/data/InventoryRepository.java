@@ -9,6 +9,7 @@ public class InventoryRepository {
     private static InventoryRepository REPOSITORY_INSTANCE;
     private List<InventoryItem> inventoryItemList;
     private MutableLiveData<List<InventoryItem>> listMutableLiveData;
+    private InventoryItem tempStoreItem;
 
     private InventoryRepository() {
         this.inventoryItemList = DummyInventory.generateDummyInventory(15);
@@ -49,5 +50,13 @@ public class InventoryRepository {
             }
         }
         listMutableLiveData.setValue(inventoryItemList);
+    }
+
+    public void tempStoreOneItem(InventoryItem inventoryItem) {
+        tempStoreItem = inventoryItem;
+    }
+
+    public InventoryItem getTempStoreItem() {
+        return tempStoreItem;
     }
 }
