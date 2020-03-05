@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.os.EnvironmentCompat;
 
 import com.example.inventoryirecord.data.InventoryItem;
+import com.example.inventoryirecord.utils.PhotoLibraryUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -113,11 +114,11 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
             if(data != null && data.getData() != null) {
                 try {
                     InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
-                    String path = getApplicationContext().getFilesDir().getAbsolutePath() + "/InventoryPhotos";
-                    File file = new File(path);
-                    file.mkdirs();
-                    File actualFile = new File(file, UUID.randomUUID().toString() + ".jpeg");
-                    actualFile.createNewFile();
+//                    String path = getApplicationContext().getFilesDir().getAbsolutePath() + "/InventoryPhotos";
+//                    File file = new File(path);
+//                    file.mkdirs();
+//                    File actualFile = new File(file, UUID.randomUUID().toString() + ".jpeg");
+//                    actualFile.createNewFile();
 //                    File path = new File(Environment.get + "/images");
 //                    if(!path.exists()) {
 //                        path.mkdirs();
@@ -127,21 +128,22 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
                     if(inventoryItem.itemPics == null){
                         inventoryItem.itemPics = new ArrayList<>();
                     }
-                    inventoryItem.itemPics.add(actualFile.getAbsolutePath());
+//                    inventoryItem.itemPics.add(actualFile.getAbsolutePath());
 //                    OutputStream outputStream = getApplicationContext().openFileOutput("cat.jpeg", Context.MODE_PRIVATE);
-                    OutputStream outputStream = new FileOutputStream(actualFile);
+//                    OutputStream outputStream = new FileOutputStream(actualFile);
                     Bitmap image = BitmapFactory.decodeStream(inputStream);
-                    image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
+                    inventoryItem.itemPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(),image));
+//                    image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//                    outputStream.flush();
+//                    outputStream.close();
 
 
                     //InputStream storedInputStream = getApplicationContext().openFileInput("cat.jpeg");
-                    InputStream storedInputStream = new FileInputStream(inventoryItem.itemPics.get(0));
-                    imageView.setImageBitmap(BitmapFactory.decodeStream(storedInputStream));
+//                    InputStream storedInputStream = new FileInputStream(inventoryItem.itemPics.get(0));
+                    imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.itemPics.get(0)));
                     if (inputStream != null) {
                         inputStream.close();
-                        storedInputStream.close();
+//                        storedInputStream.close();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
