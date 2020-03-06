@@ -18,7 +18,6 @@ import java.util.List;
 
 public class ViewInventoryActivity extends AppCompatActivity implements ViewItemAdapter.OnInventoryItemClickListener {
     public final static String TAG = ViewInventoryActivity.class.getSimpleName();
-    private List<InventoryItem> inventoryItems;
     private ViewItemAdapter viewItemAdapter;
     private RecyclerView inventoryItemsRecyclerView;
     private InventoryViewModel inventoryViewModel;
@@ -33,7 +32,6 @@ public class ViewInventoryActivity extends AppCompatActivity implements ViewItem
 
         viewItemAdapter = new ViewItemAdapter(this);
         inventoryItemsRecyclerView.setAdapter(viewItemAdapter);
-        inventoryItems = DummyInventory.generateDummyInventory(12);
 
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
         inventoryViewModel.getInventoryItemList().observe(this, new Observer<List<InventoryItem>>() {

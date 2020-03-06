@@ -2,13 +2,11 @@ package com.example.inventoryirecord;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,22 +17,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.os.EnvironmentCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inventoryirecord.adapters.PhotoGalleryAdapter;
 import com.example.inventoryirecord.data.InventoryItem;
 import com.example.inventoryirecord.utils.PhotoLibraryUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
-public class ViewEditPhotosActivity extends AppCompatActivity {
+public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGalleryAdapter.OnPhotoClickListener{
     public static final String EDIT = "editPhotos";
     private static final String TAG = ViewEditPhotosActivity.class.getSimpleName();
     public static final int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE = 131;
@@ -43,9 +38,12 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
 
     private boolean storageReadPermissionEnabled;
     private boolean storageWritePermissionEnabled;
-    private boolean editPhotos;
     private ImageView imageView;
     private Button addPhotoButton;
+    private RecyclerView itemPhotosRecyclerView;
+    private RecyclerView receiptPhotosRecyclerView;
+    private PhotoGalleryAdapter itemPhotosAdapter;
+    private PhotoGalleryAdapter receiptPhotosAdapter;
 
     private InventoryItem inventoryItem;
 
@@ -58,8 +56,18 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
         if (Objects.nonNull(mainIntent) && mainIntent.hasExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM)) {
             inventoryItem = (InventoryItem) mainIntent.getSerializableExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM);
             //editPhotos = (boolean) mainIntent.getSerializableExtra(EDIT);
-
         }
+        if(inventoryItem.itemPics == null){
+            inventoryItem.itemPics = new ArrayList<>();
+        }
+
+        itemPhotosRecyclerView = findViewById(R.id.item_photo_rec_view);
+        itemPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemPhotosRecyclerView.setHasFixedSize(true);
+        itemPhotosAdapter = new PhotoGalleryAdapter(this);
+        itemPhotosRecyclerView.setAdapter(itemPhotosAdapter);
+        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+        receiptPhotosRecyclerView = findViewById(R.id.receipt_photo_rec_view);
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -125,9 +133,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
 //                    }
 //                    File file = new File(path, "cat.jpeg");
 //                    boolean fileCreate = file.createNewFile();
-                    if(inventoryItem.itemPics == null){
-                        inventoryItem.itemPics = new ArrayList<>();
-                    }
+
 //                    inventoryItem.itemPics.add(actualFile.getAbsolutePath());
 //                    OutputStream outputStream = getApplicationContext().openFileOutput("cat.jpeg", Context.MODE_PRIVATE);
 //                    OutputStream outputStream = new FileOutputStream(actualFile);
@@ -137,6 +143,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
 //                    outputStream.flush();
 //                    outputStream.close();
 
+                    itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
 
                     //InputStream storedInputStream = getApplicationContext().openFileInput("cat.jpeg");
 //                    InputStream storedInputStream = new FileInputStream(inventoryItem.itemPics.get(0));
@@ -175,5 +182,10 @@ public class ViewEditPhotosActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onPhotoClicked(String photoLocation) {
+
     }
 }
