@@ -6,6 +6,7 @@ import java.util.List;
 public class DummyInventory {
 
     private static final String ITEM_NAME = "Name";
+    private static final String ITEM_TYPE = "Type";
     private static final String ITEM_MAKE = "Make";
     private static final String ITEM_MODEL = "Model";
     private static final String ITEM_SN = "Serial Number";
@@ -24,6 +25,7 @@ public class DummyInventory {
         for (int i = 0; i < number; i++) {
             inventoryItemArrayList.add(InventoryItem.Builder.newInstance()
                     .setItemName(ITEM_NAME + i)
+                    .setItemType(ITEM_TYPE + i)
                     .setMake(ITEM_MAKE + i)
                     .setModel(ITEM_MODEL + i)
                     .setSerialNumber(ITEM_SN + i)

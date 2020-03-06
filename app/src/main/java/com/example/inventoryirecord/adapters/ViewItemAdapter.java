@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inventoryirecord.R;
 import com.example.inventoryirecord.data.InventoryItem;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,11 +56,13 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.Invent
     class InventoryItemsViewHolder extends RecyclerView.ViewHolder {
         private TextView itemNameTextView;
         private TextView itemMakeTextView;
+        private TextView itemTypeTextView;
 
         InventoryItemsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemNameTextView = itemView.findViewById(R.id.inventory_items_name_text_view);
             itemMakeTextView = itemView.findViewById(R.id.inventory_items_make_text_view);
+            itemTypeTextView = itemView.findViewById(R.id.inventory_items_type_text_view);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,6 +74,7 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.Invent
         void bind(InventoryItem item) {
             itemNameTextView.setText(item.itemName);
             itemMakeTextView.setText(item.make);
+            itemTypeTextView.setText(item.itemType);
         }
     }
 }
