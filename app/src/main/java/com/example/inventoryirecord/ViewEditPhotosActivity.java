@@ -31,6 +31,7 @@ import java.util.Objects;
 
 public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGalleryAdapter.OnPhotoClickListener{
     public static final String EDIT = "editPhotos";
+    public static final String RECEIPT_BOOL = "receiptBool";
     private static final String TAG = ViewEditPhotosActivity.class.getSimpleName();
     public static final int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE = 131;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXT_STORAGE = 132;
@@ -38,10 +39,9 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
 
     private boolean storageReadPermissionEnabled;
     private boolean storageWritePermissionEnabled;
+    private boolean isForReceipt;
+    private boolean previewIsForReceipt;
     private ImageView imageView;
-    private Button addPhotoButton;
-    private RecyclerView itemPhotosRecyclerView;
-    private RecyclerView receiptPhotosRecyclerView;
     private PhotoGalleryAdapter itemPhotosAdapter;
     private PhotoGalleryAdapter receiptPhotosAdapter;
 
@@ -57,17 +57,28 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
             inventoryItem = (InventoryItem) mainIntent.getSerializableExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM);
             //editPhotos = (boolean) mainIntent.getSerializableExtra(EDIT);
         }
-        if(inventoryItem.itemPics == null){
+        if (inventoryItem != null && inventoryItem.itemPics == null) {
             inventoryItem.itemPics = new ArrayList<>();
         }
+        if (inventoryItem != null && inventoryItem.receiptPics == null) {
+            inventoryItem.receiptPics = new ArrayList<>();
+        }
 
-        itemPhotosRecyclerView = findViewById(R.id.item_photo_rec_view);
-        itemPhotosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager photoLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView itemPhotosRecyclerView = findViewById(R.id.item_photo_rec_view);
+        itemPhotosRecyclerView.setLayoutManager(photoLinearLayoutManager);
         itemPhotosRecyclerView.setHasFixedSize(true);
-        itemPhotosAdapter = new PhotoGalleryAdapter(this);
+        itemPhotosAdapter = new PhotoGalleryAdapter(this, false);
         itemPhotosRecyclerView.setAdapter(itemPhotosAdapter);
         itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
-        receiptPhotosRecyclerView = findViewById(R.id.receipt_photo_rec_view);
+
+        LinearLayoutManager receiptLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView receiptPhotosRecyclerView = findViewById(R.id.receipt_photo_rec_view);
+        receiptPhotosRecyclerView.setLayoutManager(receiptLinearLayoutManager);
+        receiptPhotosRecyclerView.setHasFixedSize(true);
+        receiptPhotosAdapter = new PhotoGalleryAdapter(this, true);
+        receiptPhotosRecyclerView.setAdapter(receiptPhotosAdapter);
+        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -91,14 +102,20 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     MY_PERMISSIONS_REQUEST_WRITE_EXT_STORAGE);
 
         }else {
-            addPhotoButton = findViewById(R.id.add_photo_button);
-            addPhotoButton.setVisibility(View.VISIBLE);
-            addPhotoButton.setOnClickListener(new Button.OnClickListener() {
+            Button addItemPhotoButton = findViewById(R.id.add_item_photo_button);
+            addItemPhotoButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent photoPickIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    photoPickIntent.setType("image/*");
-                    startActivityForResult(photoPickIntent, PICK_PHOTO);
+                    isForReceipt = false;
+                    launchPickImageIntent();
+                }
+            });
+            Button addReceiptPhotoButton = findViewById(R.id.add_receipt_photo_button);
+            addReceiptPhotoButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isForReceipt = true;
+                    launchPickImageIntent();
                 }
             });
             imageView = findViewById(R.id.kitten);
@@ -113,6 +130,12 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         }
 
 
+    }
+
+    private void launchPickImageIntent() {
+        Intent photoPickIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        photoPickIntent.setType("image/*");
+        startActivityForResult(photoPickIntent, PICK_PHOTO);
     }
 
     @Override
@@ -138,16 +161,22 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
 //                    OutputStream outputStream = getApplicationContext().openFileOutput("cat.jpeg", Context.MODE_PRIVATE);
 //                    OutputStream outputStream = new FileOutputStream(actualFile);
                     Bitmap image = BitmapFactory.decodeStream(inputStream);
-                    inventoryItem.itemPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(),image));
+                    if (isForReceipt) {
+                        inventoryItem.receiptPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(), image));
+                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
+                        imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.receiptPics.get(0)));
+                    } else {
+                        inventoryItem.itemPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(), image));
+                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+                        imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.itemPics.get(0)));
+                    }
 //                    image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 //                    outputStream.flush();
 //                    outputStream.close();
 
-                    itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
 
                     //InputStream storedInputStream = getApplicationContext().openFileInput("cat.jpeg");
 //                    InputStream storedInputStream = new FileInputStream(inventoryItem.itemPics.get(0));
-                    imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.itemPics.get(0)));
                     if (inputStream != null) {
                         inputStream.close();
 //                        storedInputStream.close();
@@ -185,7 +214,22 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     }
 
     @Override
-    public void onPhotoClicked(String photoLocation) {
+    public void onPhotoClicked(String photoLocation, boolean isForReceipt) {
+        try {
+            imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation));
+            Button deletePhotoButton = findViewById(R.id.delete_photo);
+            deletePhotoButton.setEnabled(true);
+            deletePhotoButton.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
+            previewIsForReceipt = isForReceipt;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            imageView.setImageResource(R.drawable.ic_broken_image_black_24dp);
+        }
     }
 }

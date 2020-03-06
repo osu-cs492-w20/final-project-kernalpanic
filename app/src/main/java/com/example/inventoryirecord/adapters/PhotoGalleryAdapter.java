@@ -20,9 +20,11 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
     private static final String TAG = PhotoGalleryAdapter.class.getSimpleName();
     private List<String> imageList;
     private OnPhotoClickListener onPhotoClickListener;
+    private boolean isReceipt;
 
-    public PhotoGalleryAdapter(OnPhotoClickListener onPhotoClickListener) {
+    public PhotoGalleryAdapter(OnPhotoClickListener onPhotoClickListener, boolean isForReceipt) {
         this.onPhotoClickListener = onPhotoClickListener;
+        this.isReceipt = isForReceipt;
     }
 
     public void updateImageList(List<String> images) {
@@ -49,7 +51,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
     }
 
     public interface OnPhotoClickListener {
-        void onPhotoClicked(String photoLocation);
+        void onPhotoClicked(String photoLocation, boolean isForReceipt);
     }
 
     class PhotoViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +63,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onPhotoClickListener.onPhotoClicked(imageList.get(getAdapterPosition()));
+                    onPhotoClickListener.onPhotoClicked(imageList.get(getAdapterPosition()), isReceipt);
                 }
             });
         }

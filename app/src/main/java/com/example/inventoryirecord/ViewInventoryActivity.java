@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventoryirecord.adapters.ViewItemAdapter;
-import com.example.inventoryirecord.data.DummyInventory;
 import com.example.inventoryirecord.data.InventoryItem;
 
 import java.util.List;
