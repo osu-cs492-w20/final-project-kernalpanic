@@ -9,6 +9,8 @@
     <string name="save_icon">Save Icon</string>
     <string name="cancel_icon">Cancel Icon</string>
     <string name="cancel">Cancel</string>
+    <string name="file_error">Error deleting temp file.</string>
+    <string name="saved_message">Image Saved</string>
     <string name="name">Name:</string>
     <string name="make">Make:</string>
     <string name="model">Model:</string>

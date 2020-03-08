@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Button for adding an item.
         Button addItemButton = findViewById(R.id.btn_add_inventory);
         addItemButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 goToAddItemScreen();
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToAddItemScreen() {
-        Intent intent = new Intent(this, addItemDetailActivity.class);
+        Intent intent = new Intent(this, AddItemActivity.class);
         startActivity(intent);
     }
 
