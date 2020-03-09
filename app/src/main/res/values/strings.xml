@@ -26,4 +26,8 @@
     <string name="button_to_view_photos">Button to View photos</string>
     <string name="find_a_photo_to_add">Add item photo</string>
     <string name="photos">Photos</string>
+    <string name="add_receipt_photo">Add Receipt Photo</string>
+    <string name="delete_photo">Delete Photo</string>
+    <string name="receipt_photos">Receipt Photos</string>
+    <string name="item_photos">Item Photos</string>
 </resources>

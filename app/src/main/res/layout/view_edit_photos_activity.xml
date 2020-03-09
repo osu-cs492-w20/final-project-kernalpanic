@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 <LinearLayout 
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -17,6 +16,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/add_item_photo_button"
             android:drawableTop="@drawable/ic_add_to_photos_black_24dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:text="@string/find_a_photo_to_add"/>
 
         <Button
@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/add_receipt_photo_button"
             android:drawableTop="@drawable/ic_add_to_photos_black_24dp"
-            android:text="Find Receipt Photo to Add"/>
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/add_receipt_photo"/>
     </LinearLayout>
 
     <ImageView
@@ -39,13 +40,13 @@
         android:id="@+id/delete_photo"
         android:enabled="false"
         android:textSize="21sp"
-        android:text="Delete Photo"
+        android:text="@string/delete_photo"
         android:backgroundTint="#F44336"
         android:drawableStart="@drawable/ic_delete_black_24dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Item Photos"
+        android:text="@string/item_photos"
         android:textSize="30sp"/>
     
 <!--    <HorizontalScrollView-->
@@ -64,7 +65,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Receipt Photos"
+        android:text="@string/receipt_photos"
         android:textSize="30sp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
