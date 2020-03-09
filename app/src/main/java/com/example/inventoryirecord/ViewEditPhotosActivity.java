@@ -68,7 +68,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         RecyclerView itemPhotosRecyclerView = findViewById(R.id.item_photo_rec_view);
         itemPhotosRecyclerView.setLayoutManager(photoLinearLayoutManager);
         itemPhotosRecyclerView.setHasFixedSize(true);
-        itemPhotosAdapter = new PhotoGalleryAdapter(this, false);
+        itemPhotosAdapter = new PhotoGalleryAdapter(this, false, this);
         itemPhotosRecyclerView.setAdapter(itemPhotosAdapter);
         itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
 
@@ -76,7 +76,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         RecyclerView receiptPhotosRecyclerView = findViewById(R.id.receipt_photo_rec_view);
         receiptPhotosRecyclerView.setLayoutManager(receiptLinearLayoutManager);
         receiptPhotosRecyclerView.setHasFixedSize(true);
-        receiptPhotosAdapter = new PhotoGalleryAdapter(this, true);
+        receiptPhotosAdapter = new PhotoGalleryAdapter(this, true, this);
         receiptPhotosRecyclerView.setAdapter(receiptPhotosAdapter);
         receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
 
@@ -164,11 +164,11 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     if (isForReceipt) {
                         inventoryItem.receiptPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(), image));
                         receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
-                        imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.receiptPics.get(0)));
+                        //imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.receiptPics.get(0)));
                     } else {
                         inventoryItem.itemPics.add(PhotoLibraryUtils.saveImage(getApplicationContext(), image));
                         itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
-                        imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.itemPics.get(0)));
+                        //imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(inventoryItem.itemPics.get(0)));
                     }
 //                    image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 //                    outputStream.flush();
@@ -216,8 +216,13 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     @Override
     public void onPhotoClicked(String photoLocation, boolean isForReceipt) {
         try {
-            imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation));
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 4;
+            imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation, options));
+            int visibility = imageView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+            imageView.setVisibility(visibility);
             Button deletePhotoButton = findViewById(R.id.delete_photo);
+            deletePhotoButton.setVisibility(visibility);
             deletePhotoButton.setEnabled(true);
             deletePhotoButton.setOnClickListener(new Button.OnClickListener() {
                 @Override

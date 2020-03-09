@@ -1,5 +1,8 @@
 package com.example.inventoryirecord.adapters;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +16,44 @@ import com.example.inventoryirecord.R;
 import com.example.inventoryirecord.utils.PhotoLibraryUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapter.PhotoViewHolder> {
     private static final String TAG = PhotoGalleryAdapter.class.getSimpleName();
     private List<String> imageList;
+    private HashMap<String, Bitmap> images;
     private OnPhotoClickListener onPhotoClickListener;
     private boolean isReceipt;
+    private Context context;
 
-    public PhotoGalleryAdapter(OnPhotoClickListener onPhotoClickListener, boolean isForReceipt) {
+    public PhotoGalleryAdapter(OnPhotoClickListener onPhotoClickListener, boolean isForReceipt, Context parentContext) {
         this.onPhotoClickListener = onPhotoClickListener;
         this.isReceipt = isForReceipt;
+        this.context = parentContext;
+
     }
 
     public void updateImageList(List<String> images) {
         this.imageList = images;
+        this.images = loadImagesFromMemory(images);
         notifyDataSetChanged();
+    }
+
+    private HashMap<String, Bitmap> loadImagesFromMemory(List<String> images) {
+        HashMap<String, Bitmap> hashMap = new HashMap<>();
+        for (String image : images) {
+            try {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                hashMap.put(image, PhotoLibraryUtils.getSavedImage(image, options));
+            } catch (IOException e) {
+                e.printStackTrace();
+                hashMap.put(image, BitmapFactory.decodeResource(this.context.getResources(),R.drawable.ic_broken_image_black_24dp));
+            }
+        }
+        return hashMap;
     }
 
     @NonNull
@@ -69,12 +93,8 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
         }
         void bind(String photoLocation) {
             Log.d(TAG, "In on bind for " + photoLocation);
-            try {
-                imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation));
-            } catch (IOException e) {
-                imageView.setImageResource(R.drawable.ic_broken_image_black_24dp);
-                e.printStackTrace();
-            }
+            //imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation));
+            imageView.setImageBitmap(images.get(photoLocation));
         }
     }
 }

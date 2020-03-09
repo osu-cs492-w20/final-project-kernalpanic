@@ -2,9 +2,7 @@ package com.example.inventoryirecord;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,14 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -218,6 +213,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     }
 
     private void getEditText(HashMap<TextViewKeys, TextView> hashMap, InventoryItem item) {
+        InventoryItem.Builder.newInstance().setNewItem(newCheckBox.isChecked()).build();
         item.itemName = Objects.requireNonNull(hashMap.get(ITEM_NAME)).getText().toString();
         item.itemType = Objects.requireNonNull(hashMap.get(ITEM_TYPE)).getText().toString();
         item.make = Objects.requireNonNull(hashMap.get(MAKE)).getText().toString();

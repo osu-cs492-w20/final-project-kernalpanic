@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:adjustViewBounds="true"
         android:id="@+id/single_photo_image_view"
         android:contentDescription="@string/photos" />
 

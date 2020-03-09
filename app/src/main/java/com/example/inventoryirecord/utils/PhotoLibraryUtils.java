@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,9 +31,9 @@ public class PhotoLibraryUtils {
         return storageFile.getAbsolutePath();
     }
 
-    public static Bitmap getSavedImage(String fileName) throws IOException {
+    public static Bitmap getSavedImage(String fileName, @Nullable BitmapFactory.Options options) throws IOException {
         InputStream storedInputStream = new FileInputStream(fileName);
-        Bitmap bitmap = BitmapFactory.decodeStream(storedInputStream);
+        Bitmap bitmap = BitmapFactory.decodeStream(storedInputStream, null , options);
         storedInputStream.close();
         return bitmap;
     }

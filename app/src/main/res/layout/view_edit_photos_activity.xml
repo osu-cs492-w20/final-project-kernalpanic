@@ -29,10 +29,12 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/kitten"
-        android:src="@drawable/kitten"/>
+        android:layout_width="wrap_content"
+        android:contentDescription="@string/selected_picture_from_gallery"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:id="@+id/kitten" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
         android:id="@+id/delete_photo"
         android:enabled="false"
         android:textSize="21sp"
+        android:visibility="invisible"
         android:text="@string/delete_photo"
         android:backgroundTint="#F44336"
         android:drawableStart="@drawable/ic_delete_black_24dp"/>
@@ -48,19 +51,12 @@
         android:layout_height="wrap_content"
         android:text="@string/item_photos"
         android:textSize="30sp"/>
-    
-<!--    <HorizontalScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/item_photo_rec_view" />
-    <!--        android:orientation="horizontal"-->
-    <!--        app:reverseLayout="true"-->
-    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--    </HorizontalScrollView>-->
 
     <TextView
         android:layout_width="wrap_content"
