@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_single_item_details_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="invisible">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/name" />
+
+        <EditText
+            android:id="@+id/edit_single_item_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:inputType="text"
+            android:textSize="24sp"
+            android:autofillHints="Enter a string for item name."
+            android:labelFor="@id/edit_single_item_name_text_view" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/type" />
+
+        <EditText
+            android:id="@+id/edit_single_item_type_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="Enter a string for the item type."
+            android:labelFor="@id/edit_single_item_type_text_view"
+            android:paddingTop="4dp"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/make" />
+
+        <EditText
+            android:id="@+id/edit_single_item_make_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_make_text_view"
+            android:autofillHints="Enter a string for the item Make"
+            android:paddingTop="4dp"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/model" />
+
+        <EditText
+            android:id="@+id/edit_single_item_model_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_model_text_view"
+            android:autofillHints="@string/model"
+            android:paddingTop="4dp"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/value" />
+
+        <EditText
+            android:id="@+id/edit_single_item_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_value_text_view"
+            android:autofillHints="Enter value amount."
+            android:paddingTop="4dp"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/price_paid" />
+
+        <EditText
+            android:id="@+id/edit_single_item_price_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_price_text_view"
+            android:autofillHints="Enter price amount."
+            android:paddingTop="4dp"
+            android:inputType="numberDecimal"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/bought_new" />
+
+        <CheckBox
+            android:id="@+id/edit_single_item_new_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/serial_number" />
+
+        <EditText
+            android:id="@+id/edit_single_item_serial_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_serial_text_view"
+            android:autofillHints="Enter the serial number."
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/date_of_purchase" />
+
+        <EditText
+            android:id="@+id/edit_single_item_date_purch_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_date_purch_text_view"
+            android:autofillHints="Enter the date of item purchase."
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:inputType="date"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/date_manufactured" />
+
+        <EditText
+            android:id="@+id/edit_single_item_date_manu_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_date_manu_text_view"
+            android:autofillHints="Enter the date of item manufacture."
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:inputType="date"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="24sp"
+            android:text="@string/notes" />
+
+        <EditText
+            android:id="@+id/edit_single_item_notes_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edit_single_item_notes_text_view"
+            android:autofillHints="Enter any notes."
+            android:padding="4dp"
+            android:layout_marginStart="12dp"
+            android:inputType="text"
+            android:textSize="24sp" />
+    </LinearLayout>
+</LinearLayout>

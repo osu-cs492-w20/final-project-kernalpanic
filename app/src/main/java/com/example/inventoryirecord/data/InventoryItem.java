@@ -7,6 +7,7 @@ import java.util.UUID;
 public class InventoryItem implements Serializable {
     public String itemID;
     public String itemName;
+    public String itemType;
     public String dateAdded;
     public String datePurchased;
     public String make;
@@ -26,6 +27,7 @@ public class InventoryItem implements Serializable {
 
     public InventoryItem(Builder builder) {
         this.itemName = builder.itemName;
+        this.itemType = builder.itemType;
         this.dateAdded = builder.dateAdded;
         this.datePurchased = builder.datePurchased;
         this.make = builder.make;
@@ -43,6 +45,7 @@ public class InventoryItem implements Serializable {
 
     public static class Builder {
         private String itemName;
+        private String itemType;
         private String dateAdded;
         private String datePurchased;
         private String make;
@@ -69,6 +72,11 @@ public class InventoryItem implements Serializable {
 
         public Builder setItemName(String name) {
             this.itemName = name;
+            return this;
+        }
+
+        public Builder setItemType(String type) {
+            this.itemType = type;
             return this;
         }
 
