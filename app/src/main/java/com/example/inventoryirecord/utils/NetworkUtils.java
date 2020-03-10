@@ -1,15 +1,9 @@
 package com.example.inventoryirecord.utils;
 // Work in progress. Finish camera first.
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
-
-import com.example.inventoryirecord.MainActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -60,9 +54,9 @@ public class NetworkUtils {
                 .header(OCP, key)
                 .header(CT, TYPE);
 
-        FileInputStream fis = new FileInputStream(filePath);
-        Bitmap bitmap = BitmapFactory.decodeStream(fis);
-//        Bitmap bitmap = BitmapFactory.decodeStream(NetworkUtils.class.getResourceAsStream(filePath));
+//        FileInputStream fis = new FileInputStream(filePath);
+//        Bitmap bitmap = BitmapFactory.decodeStream(fis);
+        Bitmap bitmap = BitmapFactory.decodeStream(NetworkUtils.class.getResourceAsStream(filePath));
         MediaType mediaType = MediaType.parse(TYPE);
         RequestBody formBody = RequestBody.create(BitMapToByteArray(bitmap), mediaType);
 

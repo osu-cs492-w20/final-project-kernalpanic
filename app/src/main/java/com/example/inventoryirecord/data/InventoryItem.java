@@ -2,6 +2,7 @@ package com.example.inventoryirecord.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class InventoryItem implements Serializable {
@@ -43,6 +44,36 @@ public class InventoryItem implements Serializable {
         this.itemID = UUID.randomUUID().toString();
     }
 
+    public InventoryItem(Item itemDescriptions, List<ItemPhotos> receiptPhotos, List<ItemPhotos> objectPhotos) {
+        this.itemName = itemDescriptions.itemName;
+        this.itemType = itemDescriptions.itemType;
+        this.itemID = itemDescriptions.itemID;
+        this.dateAdded = itemDescriptions.dateAdded;
+        this.datePurchased = itemDescriptions.datePurchased;
+        this.make = itemDescriptions.make;
+        this.model = itemDescriptions.model;
+        this.serialNumber = itemDescriptions.serialNumber;
+        this.dateOfManufacture = itemDescriptions.dateOfManufacture;
+        this.otherNotes = itemDescriptions.otherNotes;
+        this.newItem = itemDescriptions.newItem;
+        this.pricePaid = itemDescriptions.pricePaid;
+        this.value = itemDescriptions.value;
+
+        ArrayList<String> tempReceiptPics = new ArrayList<>();
+        ArrayList<String> tempItemPics = new ArrayList<>();
+
+        for (ItemPhotos rp : receiptPhotos) {
+            tempReceiptPics.add(rp.path);
+        }
+        for (ItemPhotos op : objectPhotos) {
+            tempItemPics.add(op.path);
+        }
+
+        this.receiptPics = tempReceiptPics;
+        this.itemPics = tempItemPics;
+
+    }
+
     public static class Builder {
         private String itemName;
         private String itemType;
@@ -63,10 +94,11 @@ public class InventoryItem implements Serializable {
         public static Builder newInstance() {
             return new Builder();
         }
+
         private Builder() {
         }
 
-        public InventoryItem build(){
+        public InventoryItem build() {
             return new InventoryItem(this);
         }
 
