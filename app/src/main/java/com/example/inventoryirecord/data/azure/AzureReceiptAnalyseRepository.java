@@ -1,4 +1,4 @@
-package com.example.inventoryirecord.data;
+package com.example.inventoryirecord.data.azure;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -6,7 +6,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.inventoryirecord.data.Status;
 import com.example.inventoryirecord.utils.AzureUtils;
+
+import java.util.Map;
 
 public class AzureReceiptAnalyseRepository implements AzureReceiptAnalyseAsyncTask.Callback {
     private static final String TAG = AzureReceiptAnalyseRepository.class.getSimpleName();
@@ -50,13 +53,15 @@ public class AzureReceiptAnalyseRepository implements AzureReceiptAnalyseAsyncTa
     public void loadAnalyseResults(String filePath) {
         if (shouldExecuteAnalyse(filePath)) {
             mCurrentQuery = filePath;
-            String url = AzureUtils.getReceiptAnalysePOSTURL();
+            Map.Entry<String, String> entry = (AzureUtils.getURLKeyMap(true)).entrySet().iterator().next();
+            String subscriptionKey = entry.getValue();
+            String url = entry.getKey();
             mAnalyseResults.setValue(null);
             Log.d(TAG, "executing Analyse with url: " + url + "and file path in:" + filePath);
             mLoadingStatus.setValue(Status.LOADING);
-            new AzureReceiptAnalyseAsyncTask(this).execute(filePath, url);
+            new AzureReceiptAnalyseAsyncTask(this).execute(filePath, url, subscriptionKey);
         } else {
-            Log.d(TAG, "using cached Analyse results");
+            Log.d(TAG, "using cached Azure Receipt Analyse results");
         }
     }
 }

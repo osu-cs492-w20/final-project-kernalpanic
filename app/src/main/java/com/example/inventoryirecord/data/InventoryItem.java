@@ -1,10 +1,18 @@
 package com.example.inventoryirecord.data;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
+@Entity(tableName = "items")
 public class InventoryItem implements Serializable {
+    @PrimaryKey
+    @NonNull
     public String itemID;
     public String itemName;
     public String itemType;
@@ -19,11 +27,17 @@ public class InventoryItem implements Serializable {
     public double pricePaid;
     public double value;
     //image location??
+    @Ignore
     public ArrayList<String> itemPics;
+    @Ignore
     public ArrayList<String> receiptPics;
 
     //to use the builder : InventoryItem inventoryItem =
     // InventoryItem.Builder.newInstance().setItemName("name").build();
+
+    public InventoryItem() {
+        super();
+    }
 
     public InventoryItem(Builder builder) {
         this.itemName = builder.itemName;
@@ -63,10 +77,11 @@ public class InventoryItem implements Serializable {
         public static Builder newInstance() {
             return new Builder();
         }
+
         private Builder() {
         }
 
-        public InventoryItem build(){
+        public InventoryItem build() {
             return new InventoryItem(this);
         }
 

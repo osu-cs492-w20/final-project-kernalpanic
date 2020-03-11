@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -16,38 +18,55 @@ import okhttp3.Response;
 
 public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
-    private static final String KEY = "9219690c24d24d20964e07c27cfe1b67";
     private static final String TYPE = "application/octet-stream";
     private static final String CT = "Content-Type";
     private static final String OCP = "Ocp-Apim-Subscription-Key";
 
     private static final OkHttpClient mHTTPClient = new OkHttpClient();
 
-    public static String doHttpPostObj(String filePath, String url) {
-        //default header key
-        Request.Builder builder = new Request.Builder()
-                .header(OCP, KEY)
-                .header(CT, TYPE);
-
-        Bitmap bitmap = BitmapFactory.decodeStream(NetworkUtils.class.getResourceAsStream(filePath));
-
-        MediaType mediaType = MediaType.parse("application/octet-stream");
-        RequestBody formBody = RequestBody.create(BitMapToByteArray(bitmap), mediaType);
-
-        Request request = builder.url(url)
-                .post(formBody)
-                .build();// Add post to this object for binary image.
+    public static String doHttpPostObj(String filePath, String url, String key) throws FileNotFoundException {
+        Request request = buildRequest(filePath, url, key);
 
         try (Response response = mHTTPClient.newCall(request).execute()) {
-            return response.header("Operation-Location");
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static Response geHttpPostResponse(String filePath, String url, String key) throws FileNotFoundException {
+        Request request = buildRequest(filePath, url, key);
+        // Add post to this object for binary image.
+
+        try (Response response = mHTTPClient.newCall(request).execute()) {
+            return response;
         } catch (Exception e) {
-            return "null";
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public static String doHTTPGet(String url) throws IOException {
+    private static Request buildRequest(String filePath, String url, String key) throws FileNotFoundException {
+        //default header key
+        Request.Builder builder = new Request.Builder()
+                .header(OCP, key)
+                .header(CT, TYPE);
+
+        FileInputStream fis = new FileInputStream(filePath);
+        Bitmap bitmap = BitmapFactory.decodeStream(fis);
+        MediaType mediaType = MediaType.parse(TYPE);
+        RequestBody formBody = RequestBody.create(BitMapToByteArray(bitmap), mediaType);
+
+        return builder.url(url)
+                .post(formBody)
+                .build();
+    }
+
+    public static String doHTTPGet(String url, String key) throws IOException {
         Log.d(TAG, "doing http GET, url is " + url);
-        Request.Builder builder = new Request.Builder().header(OCP, KEY);
+        Request.Builder builder = new Request.Builder().header(OCP, key);
         Request request = builder.url(url)
                 .build();
 
@@ -56,10 +75,12 @@ public class NetworkUtils {
         }
     }
 
-    public static byte[] BitMapToByteArray(Bitmap bitmap) {
+    private static byte[] BitMapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         return baos.toByteArray();
 
     }
+
+
 }
