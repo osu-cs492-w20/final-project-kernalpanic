@@ -52,6 +52,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
+        //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -59,6 +60,17 @@ public class AddItemActivity extends AppCompatActivity {
                     return;
                 }
                 test.setText("Best Match:" + s);
+            }
+        });
+
+        //observe the change of the receipt result
+        showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
+            @Override
+            public void onChanged(ReceiptResult s) {
+                if (s == null) {
+                    return;
+                }
+                test.setText("receipt analyse result:" + new Gson().toJson(s));
             }
         });
 
@@ -111,6 +123,9 @@ public class AddItemActivity extends AppCompatActivity {
                 //Example of URI
                 TextView name = findViewById(R.id.add_single_item_name_text_view);
                 name.setText(mSavedReceiptURI);
+                if (mSavedReceiptURI != null) {
+                    showReceiptAnalyseViewModel.loadAnalyseResults(mSavedReceiptURI);
+                }
             }
         }
         // Returned object image.
@@ -122,7 +137,6 @@ public class AddItemActivity extends AppCompatActivity {
 //                TextView name = findViewById(R.id.add_single_item_name_text_view);
 //                name.setText(mSavedObjectURI);
                 if (mSavedObjectURI != null) {
-//                    String temp = "/storage/emulated/0/DCIM/Camera/IMG_20200226_195656.jpg";
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);
                 }
             }
