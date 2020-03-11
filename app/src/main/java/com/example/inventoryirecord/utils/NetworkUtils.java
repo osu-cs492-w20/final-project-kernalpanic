@@ -54,9 +54,8 @@ public class NetworkUtils {
                 .header(OCP, key)
                 .header(CT, TYPE);
 
-//        FileInputStream fis = new FileInputStream(filePath);
-//        Bitmap bitmap = BitmapFactory.decodeStream(fis);
-        Bitmap bitmap = BitmapFactory.decodeStream(NetworkUtils.class.getResourceAsStream(filePath));
+        FileInputStream fis = new FileInputStream(filePath);
+        Bitmap bitmap = BitmapFactory.decodeStream(fis);
         MediaType mediaType = MediaType.parse(TYPE);
         RequestBody formBody = RequestBody.create(BitMapToByteArray(bitmap), mediaType);
 
@@ -78,7 +77,7 @@ public class NetworkUtils {
 
     private static byte[] BitMapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         return baos.toByteArray();
 
     }

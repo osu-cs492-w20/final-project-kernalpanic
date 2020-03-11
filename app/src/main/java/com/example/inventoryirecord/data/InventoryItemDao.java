@@ -11,14 +11,14 @@ import androidx.room.Update;
 public interface InventoryItemDao {
 
     @Insert
-    void insert(Item inventoryItem);
+    void insert(InventoryItem inventoryItem);
 
     @Delete
-    void delete(Item inventoryItem);
+    void delete(InventoryItem inventoryItem);
 
     @Update
-    void update(Item inventoryItem);
+    void update(InventoryItem inventoryItem);
 
     @Query("SELECT * FROM items where itemID=:itemID LIMIT 1")
-    LiveData<Item> getItemByID(String itemID);
+    LiveData<InventoryItem> getItemByID(String itemID);
 }

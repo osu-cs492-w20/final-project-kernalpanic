@@ -31,21 +31,6 @@
 
     <include layout="@layout/button_layout" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-
-        <TextView
-            android:id="@+id/tv_test_network"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="showing analyse result here"
-            android:textColor="#000"
-            android:textSize="20sp" />
-    </ScrollView>
-
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
