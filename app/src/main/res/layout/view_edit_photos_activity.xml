@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/add_item_photo_button"
+            android:drawableTop="@drawable/ic_add_to_photos_black_24dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/find_a_photo_to_add"
+            android:textSize="18sp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/round_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/add_receipt_photo_button"
+            android:textSize="18sp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/round_button"
+            android:drawableTop="@drawable/ic_add_to_photos_black_24dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/add_receipt_photo"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:contentDescription="@string/selected_picture_from_gallery"
+        android:visibility="invisible"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/kitten" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/delete_photo"
+        android:enabled="false"
+        android:textSize="21sp"
+        android:visibility="invisible"
+        android:padding="3dp"
+        android:text="@string/delete_photo"
+        android:backgroundTint="@color/red_stop"
+        android:background="@drawable/round_button"
+        android:drawableStart="@drawable/ic_delete_black_24dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/item_photos"
+        android:textSize="30sp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_photo_rec_view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/receipt_photos"
+        android:textSize="30sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/receipt_photo_rec_view"/>
+
+</LinearLayout>
+</ScrollView>

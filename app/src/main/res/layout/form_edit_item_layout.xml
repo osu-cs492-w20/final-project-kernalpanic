@@ -17,7 +17,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/name" />
+            android:text="@string/name"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_name_text_view"
@@ -41,7 +42,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/type" />
+            android:text="@string/type"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_type_text_view"
@@ -65,7 +67,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/make" />
+            android:text="@string/make"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_make_text_view"
@@ -89,7 +92,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/model" />
+            android:text="@string/model"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_model_text_view"
@@ -113,7 +117,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/value" />
+            android:text="@string/value"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_value_text_view"
@@ -137,7 +142,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/price_paid" />
+            android:text="@string/price_paid"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_price_text_view"
@@ -161,7 +167,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/bought_new" />
+            android:text="@string/bought_new"
+            android:textStyle="bold"/>
 
         <CheckBox
             android:id="@+id/edit_single_item_new_check_box"
@@ -181,7 +188,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/serial_number" />
+            android:text="@string/serial_number"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_serial_text_view"
@@ -206,7 +214,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/date_of_purchase" />
+            android:text="@string/date_of_purchase"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_date_purch_text_view"
@@ -231,7 +240,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/date_manufactured" />
+            android:text="@string/date_manufactured"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_date_manu_text_view"
@@ -256,7 +266,8 @@
             android:paddingTop="4dp"
             android:layout_marginStart="12dp"
             android:textSize="24sp"
-            android:text="@string/notes" />
+            android:text="@string/notes"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edit_single_item_notes_text_view"

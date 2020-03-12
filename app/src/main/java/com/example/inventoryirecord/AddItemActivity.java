@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,6 +35,9 @@ public class AddItemActivity extends AppCompatActivity {
     private String mSavedObjectURI;
     private TextView test;
 
+    private LinearLayout editAddItemLayout;
+    private LinearLayout saveCancelButton;
+
     private AzureViewModel showReceiptAnalyseViewModel;
 
     @Override
@@ -41,7 +46,13 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.add_item_activity);
 
         showReceiptAnalyseViewModel = new ViewModelProvider(this).get(AzureViewModel.class);
-        test = findViewById(R.id.add_single_item_name_text_view);
+
+        editAddItemLayout = findViewById(R.id.edit_add_item_fragment);
+        editAddItemLayout.setVisibility(View.VISIBLE);
+        saveCancelButton = findViewById(R.id.save_cancel_button_layout);
+        saveCancelButton.setVisibility(View.VISIBLE);
+
+        test = findViewById(R.id.edit_single_item_name_text_view);
 
 
         showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
@@ -122,7 +133,7 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do stuff with receipt image uri here.
                 mSavedReceiptURI = data.getStringExtra("IMAGE_URI");
                 //Example of URI
-                TextView name = findViewById(R.id.add_single_item_name_text_view);
+                TextView name = findViewById(R.id.edit_single_item_name_text_view);
                 name.setText(mSavedReceiptURI);
                 if (mSavedReceiptURI != null) {
                     showReceiptAnalyseViewModel.loadAnalyseResults(mSavedReceiptURI);
@@ -135,7 +146,7 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do stuff with object image uri here.
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
                 //Example of URI
-                TextView name = findViewById(R.id.add_single_item_name_text_view);
+                TextView name = findViewById(R.id.edit_single_item_name_text_view);
                 name.setText(mSavedObjectURI);
                 if (mSavedObjectURI != null) {
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);

@@ -32,8 +32,8 @@ public class InventoryItem implements Serializable {
     @Ignore
     public ArrayList<String> receiptPics;
 
-    //to use the builder : InventoryItem inventoryItem =
-    // InventoryItem.Builder.newInstance().setItemName("name").build();
+    //to use the builder :
+    // InventoryItem inventoryItem = InventoryItem.Builder.newInstance().setItemName("name").build();
 
     public InventoryItem() {
         super();

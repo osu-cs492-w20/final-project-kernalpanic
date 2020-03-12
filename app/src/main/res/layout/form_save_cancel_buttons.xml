@@ -16,10 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/border"
+        android:background="@drawable/round_button"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:backgroundTint="#5CB50C">
+        android:backgroundTint="@color/green_save_button">
 
         <ImageView
             android:layout_width="40dp"
@@ -43,10 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/border"
+        android:background="@drawable/round_button"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:backgroundTint="#F13A3A">
+        android:backgroundTint="@color/red_stop">
 
         <ImageView
             android:layout_width="40dp"

@@ -25,6 +25,29 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/view_photos_layout_button"
+                    android:background="@drawable/round_button">
+
+                    <ImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_photo_album_black_24dp"
+                        android:contentDescription="@string/button_to_view_photos" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="@string/view_photos"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -32,7 +55,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/name"/>
+                        android:text="@string/name"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_name_text_view"
                         android:layout_width="wrap_content"
@@ -51,7 +75,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/type"/>
+                        android:text="@string/type"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_type_text_view"
                         android:layout_width="wrap_content"
@@ -70,7 +95,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/make"/>
+                        android:text="@string/make"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_make_text_view"
                         android:layout_width="wrap_content"
@@ -89,7 +115,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/model"/>
+                        android:text="@string/model"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_model_text_view"
                         android:layout_width="wrap_content"
@@ -108,7 +135,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/value"/>
+                        android:text="@string/value"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_value_text_view"
                         android:layout_width="wrap_content"
@@ -127,7 +155,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/price_paid"/>
+                        android:text="@string/price_paid"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_price_text_view"
                         android:layout_width="wrap_content"
@@ -146,7 +175,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/bought_new"/>
+                        android:text="@string/bought_new"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_new_text_view"
                         android:layout_width="wrap_content"
@@ -165,7 +195,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/serial_number"/>
+                        android:text="@string/serial_number"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_serial_text_view"
                         android:layout_width="wrap_content"
@@ -184,7 +215,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/date_of_purchase"/>
+                        android:text="@string/date_of_purchase"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_date_purch_text_view"
                         android:layout_width="wrap_content"
@@ -203,7 +235,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/date_manufactured"/>
+                        android:text="@string/date_manufactured"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_date_manu_text_view"
                         android:layout_width="wrap_content"
@@ -222,7 +255,8 @@
                         android:padding="4dp"
                         android:layout_marginStart="12dp"
                         android:textSize="24sp"
-                        android:text="@string/notes"/>
+                        android:text="@string/notes"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/single_item_notes_text_view"
                         android:layout_width="wrap_content"
@@ -253,8 +287,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:background="@drawable/border"
-                android:backgroundTint="#834EBB75"
+                android:background="@drawable/round_button"
                 android:layout_margin="15dp">
 
                 <ImageView
@@ -280,8 +313,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal"
-                    android:background="@drawable/border"
-                    android:backgroundTint="#F44336"
+                    android:background="@drawable/round_button"
+                    android:backgroundTint="@color/red_stop"
                     android:layout_margin="15dp"
                     android:visibility="visible">
 
