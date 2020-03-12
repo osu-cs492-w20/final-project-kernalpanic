@@ -104,7 +104,8 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
             addItemPhotoButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addItemPhotoButton.setBackgroundColor(0x83265A38);
+                    addItemPhotoButton.setBackground(getDrawable(R.drawable.round_button_clicked));
+
                     isForReceipt = false;
                     launchPickImageIntent();
                 }
@@ -113,7 +114,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
             addReceiptPhotoButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addReceiptPhotoButton.setBackgroundColor(0x83265A38);
+                    addReceiptPhotoButton.setBackground(getDrawable(R.drawable.round_button_clicked));
                     isForReceipt = true;
                     launchPickImageIntent();
                 }
@@ -157,8 +158,8 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     @Override
     protected void onResume() {
         super.onResume();
-        addReceiptPhotoButton.setBackgroundColor(0x834EBB75);
-        addItemPhotoButton.setBackgroundColor(0x834EBB75);
+        addReceiptPhotoButton.setBackground(getDrawable(R.drawable.round_button));
+        addItemPhotoButton.setBackground(getDrawable(R.drawable.round_button));
     }
 
     @Override

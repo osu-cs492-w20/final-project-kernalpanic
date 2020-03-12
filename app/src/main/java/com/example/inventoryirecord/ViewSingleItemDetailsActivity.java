@@ -132,7 +132,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     }
 
     private void handlePhotoButtonClick() {
-        viewPhotosButton.setBackgroundColor(0x83265A38);
+        viewPhotosButton.setBackground(getDrawable(R.drawable.round_button_clicked));
         Intent photosActivity = new Intent(this, ViewEditPhotosActivity.class);
         photosActivity.putExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM, inventoryItem);
         startActivityForResult(photosActivity, ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE);
@@ -261,6 +261,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        viewPhotosButton.setBackgroundColor(0x834EBB75);
+        viewPhotosButton.setBackground(getDrawable(R.drawable.round_button));
     }
 }
