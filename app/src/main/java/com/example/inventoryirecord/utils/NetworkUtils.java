@@ -55,7 +55,10 @@ public class NetworkUtils {
                 .header(CT, TYPE);
 
         FileInputStream fis = new FileInputStream(filePath);
+
         Bitmap bitmap = BitmapFactory.decodeStream(fis);
+        //bitmap = Bitmap.createScaledBitmap(bitmap, 500,500, true);
+
         MediaType mediaType = MediaType.parse(TYPE);
         RequestBody formBody = RequestBody.create(BitMapToByteArray(bitmap), mediaType);
 

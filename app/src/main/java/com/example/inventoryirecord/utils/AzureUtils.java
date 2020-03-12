@@ -68,6 +68,9 @@ public class AzureUtils {
         Map<String, Double> resultMap = new HashMap<>();
 
         ObjectDetectedResult result = gson.fromJson(objectsJson, ObjectDetectedResult.class);
+        if(result==null){
+            return null;
+        }
         for (DetectedObject obj : result.objects) {
             String key = obj.object;
             Double value = obj.confidence;
