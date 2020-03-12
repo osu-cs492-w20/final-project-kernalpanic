@@ -23,6 +23,10 @@
     <string name="notes">Notes:</string>
     <string name="delete_item">Delete Item</string>
     <string name="date_manufactured">Date Manufactured:</string>
+    <string name="number_of_item_stored">Number of Item Stored: %1$d</string>
+    <string name="total_value_of_item">Total Value of Item: $ %1$.2f </string>
+    <string name="numbers_of_receipts">Numbers of Receipts: %1$d</string>
+    <string name="number_of_pictures">Number of Pictures: %1$d</string>
     <string name="view_photos">View/Edit Photos</string>
     <string name="button_to_add_image">Button to add Image.</string>
     <string name="button_to_view_photos">Button to View photos</string>

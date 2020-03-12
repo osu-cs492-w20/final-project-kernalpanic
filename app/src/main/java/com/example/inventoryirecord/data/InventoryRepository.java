@@ -1,5 +1,8 @@
 package com.example.inventoryirecord.data;
 
+import android.app.Application;
+import android.os.AsyncTask;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,7 +16,7 @@ public class InventoryRepository {
     private InventoryRepository() {
         this.inventoryItemList = DummyInventory.generateDummyInventory(15);
         this.listMutableLiveData = new MutableLiveData<>();
-    };
+    }
 
     public static InventoryRepository getInstance() {
         if(REPOSITORY_INSTANCE == null) {
@@ -50,4 +53,7 @@ public class InventoryRepository {
         }
         listMutableLiveData.setValue(inventoryItemList);
     }
+
+
+
 }

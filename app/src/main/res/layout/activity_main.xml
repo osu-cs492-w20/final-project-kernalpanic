@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Number of Item Stored: 50"
+            android:text="@string/number_of_item_stored"
             android:textColor="#000"
             android:textSize="15sp" />
 
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Total Value ofItem: $111"
+            android:text="@string/total_value_of_item"
             android:textColor="#000"
             android:textSize="15sp" />
 
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Numbers of Receipts: 10"
+            android:text="@string/numbers_of_receipts"
             android:textColor="#000"
             android:textSize="15sp" />
 
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Number of Pictures: 20"
+            android:text="@string/number_of_pictures"
             android:textColor="#000"
             android:textSize="15sp" />
     </LinearLayout>

@@ -63,8 +63,12 @@ public class AzureObjectDetectAsyncTask extends AsyncTask<String, Void, String> 
         Map<String, Double> resultMap = new HashMap<>();
         Set<String> resultSet = new HashSet<>();
         String bestResult = null;
-        if (s != null) {
-            resultMap = AzureUtils.parseObjectsJSON(s, 0);
+        try {
+            if (s != null) {
+                resultMap = AzureUtils.parseObjectsJSON(s, 0);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Something wrong!! " + s);
         }
 
         int maxConfidence = 0;
