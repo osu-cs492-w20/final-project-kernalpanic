@@ -1,28 +1,20 @@
 package com.example.inventoryirecord;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.example.inventoryirecord.data.ReceiptResult;
-import com.google.gson.Gson;
+import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
     private Intent intent;
-
-    private TextView mTextView;
-    private ShowReceiptAnalyseViewModel showReceiptAnalyseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 goToAddItemScreen();
             }
         });
-
-        // text view to show the analyze result
-        mTextView = findViewById(R.id.tv_test_network);
-        showReceiptAnalyseViewModel = new ViewModelProvider(this).get(ShowReceiptAnalyseViewModel.class);
-
-        showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
-            @Override
-            public void onChanged(ReceiptResult gitHubRepos) {
-                if (gitHubRepos != null)
-                    mTextView.setText(new Gson().toJson(gitHubRepos));
-            }
-        });
-
-        //a button, when click, upload the file in the file path and analyze, showing the result in text view
-        Button searchButton = findViewById(R.id.btn_test_network);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // hard coding analyze path
-                String filePath = "/res/drawable/test.jpg";
-                showReceiptAnalyseViewModel.loadAnalyseResults(filePath);
-            }
-        });
-
-        // end of test analyse
 
     }
 
@@ -100,5 +67,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void acquirePermission() {
+        int REQUEST_EXTERNAL_STORAGE = 1;
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        int permission = ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+
     }
 }

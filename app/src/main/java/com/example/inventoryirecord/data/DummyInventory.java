@@ -19,7 +19,6 @@ public class DummyInventory {
     private static final double ITEM_VALUE = 33.00;
 
 
-
     public static List<InventoryItem> generateDummyInventory(int number) {
         ArrayList<InventoryItem> inventoryItemArrayList = new ArrayList<>();
         for (int i = 0; i < number; i++) {
