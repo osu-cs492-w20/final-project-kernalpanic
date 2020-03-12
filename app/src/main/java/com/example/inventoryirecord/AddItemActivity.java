@@ -54,7 +54,6 @@ public class AddItemActivity extends AppCompatActivity {
 
         test = findViewById(R.id.edit_single_item_name_text_view);
 
-
         showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
             @Override
             public void onChanged(ReceiptResult gitHubRepos) {
@@ -70,7 +69,9 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
-                test.setText("Best Match:" + s);
+                String tokens[] = s.split(":");
+                test = findViewById(R.id.edit_single_item_type_text_view);
+                test.setText(tokens[0]);
             }
         });
 
@@ -81,6 +82,9 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
+                Gson gson = new Gson();
+
+
                 test.setText("receipt analyse result:" + new Gson().toJson(s));
             }
         });
@@ -132,9 +136,6 @@ public class AddItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Do stuff with receipt image uri here.
                 mSavedReceiptURI = data.getStringExtra("IMAGE_URI");
-                //Example of URI
-                TextView name = findViewById(R.id.edit_single_item_name_text_view);
-                name.setText(mSavedReceiptURI);
                 if (mSavedReceiptURI != null) {
                     showReceiptAnalyseViewModel.loadAnalyseResults(mSavedReceiptURI);
                 }
@@ -145,9 +146,6 @@ public class AddItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Do stuff with object image uri here.
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
-                //Example of URI
-                TextView name = findViewById(R.id.edit_single_item_name_text_view);
-                name.setText(mSavedObjectURI);
                 if (mSavedObjectURI != null) {
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);
                 }
