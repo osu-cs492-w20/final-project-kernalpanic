@@ -6,17 +6,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.inventoryirecord.data.InventoryItem;
-import com.example.inventoryirecord.data.InventoryRepository;
-import com.example.inventoryirecord.data.InventorySavedRepository;
+import com.example.inventoryirecord.data.InventorySaveRepository;
 
 import java.util.List;
 
-public class InventorySavedViewModel extends AndroidViewModel {
-    private InventorySavedRepository inventoryRepository;
+public class InventorySaveViewModel extends AndroidViewModel {
+    private InventorySaveRepository inventoryRepository;
 
-    public InventorySavedViewModel(Application application) {
+    public InventorySaveViewModel(Application application) {
         super(application);
-        inventoryRepository = new InventorySavedRepository(application);
+        inventoryRepository = new InventorySaveRepository(application);
     }
 
 

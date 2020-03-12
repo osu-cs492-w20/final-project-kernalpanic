@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mItemTotalValueTV;
     private TextView mTotalReceiptNumberTV;
     private TextView mTotalPictureNumbersTV;
-    private InventorySavedViewModel inventoryViewModel;
+    private InventorySaveViewModel inventoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         inventoryViewModel = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
-        ).get(InventorySavedViewModel.class);
+        ).get(InventorySaveViewModel.class);
 
         inventoryViewModel.getObjectPictureNumber().observe(this, new Observer<Integer>() {
             @Override

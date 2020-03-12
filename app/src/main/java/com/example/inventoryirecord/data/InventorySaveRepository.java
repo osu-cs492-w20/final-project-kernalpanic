@@ -7,12 +7,12 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class InventorySavedRepository {
+public class InventorySaveRepository {
     private InventoryItemDao mItemsDAO;
     private InventoryItemPhotosDao mPhotosDAO;
 
 
-    public InventorySavedRepository(Application application) {
+    public InventorySaveRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         mItemsDAO = db.inventoryItemDao();
         mPhotosDAO = db.inventoryItemPhotosDao();
