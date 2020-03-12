@@ -33,4 +33,7 @@
     <string name="receipt_photos">Receipt Photos</string>
     <string name="item_photos">Item Photos</string>
     <string name="selected_picture_from_gallery">Selected Picture from Gallery</string>
+
+    <string name="title_activity_photo_view">PhotoViewActivity</string>
+    <string name="dummy_content">An Error Occurred While Loading The Image</string>
 </resources>

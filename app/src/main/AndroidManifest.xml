@@ -7,10 +7,10 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PhotoViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".ViewEditPhotosActivity"
+            android:label="@string/title_activity_photo_view"
+            android:theme="@style/FullscreenTheme" />
+        <activity
             android:name=".ViewInventoryActivity"
             android:parentActivityName=".MainActivity" />
         <activity
@@ -27,11 +33,10 @@
             android:parentActivityName=".ViewInventoryActivity" />
         <activity
             android:name=".AddItemActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddImageActivity"
-            android:parentActivityName=".AddItemActivity">
-        </activity>
+            android:parentActivityName=".AddItemActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -42,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.inventoryirecord.fileprovider"
@@ -51,9 +57,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".ViewEditPhotosActivity"
-            android:parentActivityName=".ViewSingleItemDetailsActivity"/>
 
+        <activity
+            android:name=".ViewEditPhotosActivity"
+            android:parentActivityName=".ViewSingleItemDetailsActivity" />
     </application>
 
 </manifest>

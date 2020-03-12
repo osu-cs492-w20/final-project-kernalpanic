@@ -7,4 +7,6 @@
     <color name="red_stop">#F13A3A</color>
     <color name="button_theme_green">#4EBB75</color>
     <color name="button_theme_green_clicked">#3F955E</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

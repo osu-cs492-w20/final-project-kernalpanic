@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +37,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     public static final int MY_PERMISSIONS_REQUEST_WRITE_EXT_STORAGE = 132;
     private static final int PICK_PHOTO = 133;
     public static final int VIEW_EDIT_PHOTOS_ACTIVITY_CODE = 134;
+    public static final int PHOTO_VIEW_ACTIVITY_CODE = 135;
 
     private boolean storageReadPermissionEnabled;
     private boolean storageWritePermissionEnabled;
@@ -120,8 +121,21 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 }
             });
             imageView = findViewById(R.id.kitten);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   onPreviewPhotoClicked();
+                }
+            });
         }
 
+    }
+
+    private void onPreviewPhotoClicked() {
+        Intent photoViewIntent = new Intent(this,PhotoViewActivity.class);
+        photoViewIntent.putExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM, inventoryItem);
+        photoViewIntent.putExtra(PhotoViewActivity.PHOTO, currentPhoto);
+        startActivityForResult(photoViewIntent,PHOTO_VIEW_ACTIVITY_CODE);
     }
 
     private void launchPickImageIntent() {
@@ -151,6 +165,10 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        } else if (requestCode == PHOTO_VIEW_ACTIVITY_CODE && resultCode == Activity.RESULT_OK){
+            if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
+                inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
             }
         }
     }
