@@ -152,13 +152,13 @@ public class AddImageActivity extends AppCompatActivity {
 
         } else {
             // Otherwise, delete the temporary image file
-            BitmapUtils.deleteImageFile(this, mTempPhotoPath);
+            BitmapUtils.deleteImageFile(mTempPhotoPath);
         }
     }
 
     private void processAndSetImage(){
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
-        mSavedPhotoURI = BitmapUtils.saveImage(this, mResultsBitmap);
+        mSavedPhotoURI = BitmapUtils.saveImage(this, mResultsBitmap, true);
 
         Intent data = new Intent();
         data.putExtra("IMAGE_URI", mSavedPhotoURI);

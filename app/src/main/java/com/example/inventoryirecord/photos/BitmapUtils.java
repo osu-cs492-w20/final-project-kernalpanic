@@ -10,11 +10,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.example.inventoryirecord.R;
+import androidx.annotation.Nullable;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +47,7 @@ public class BitmapUtils {
         context.sendBroadcast(mediaScanIntent);
     }
 
-    public static String saveImage(Context context, Bitmap image) {
+    public static String saveImage(Context context, Bitmap image, boolean addToGallery) {
         String savedImagePath = null;
 
         // Create the new file in the external storage
@@ -72,8 +74,10 @@ public class BitmapUtils {
                 e.printStackTrace();
             }
 
-            // Add the image to the system gallery
-            galleryAddPic(context, savedImagePath);
+            if(addToGallery) {
+                // Add the image to the system gallery
+                galleryAddPic(context, savedImagePath);
+            }
 
             // Show a Toast with the save location
             //String savedMessage = context.getString(R.string.saved_message, savedImagePath);
@@ -107,18 +111,19 @@ public class BitmapUtils {
 
         return BitmapFactory.decodeFile(imagePath);
     }
-    public static boolean deleteImageFile(Context context, String imagePath) {
+
+    public static Bitmap getSavedImage(String fileName, @Nullable BitmapFactory.Options options) throws IOException {
+        InputStream storedInputStream = new FileInputStream(fileName);
+        Bitmap bitmap = BitmapFactory.decodeStream(storedInputStream, null , options);
+        storedInputStream.close();
+        return bitmap;
+    }
+
+    public static boolean deleteImageFile(String imagePath) {
 
         // Get the file
         File imageFile = new File(imagePath);
 
-        // Delete the image
-        boolean deleted = imageFile.delete();
-
-        // If there is an error deleting the file, show a Toast
-        if (!deleted) {
-            String errorMessage = context.getString(R.string.file_error);
-        }
-        return deleted;
+        return imageFile.delete();
     }
 }

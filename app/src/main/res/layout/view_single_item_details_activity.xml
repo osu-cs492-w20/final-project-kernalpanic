@@ -28,17 +28,20 @@
                     android:orientation="vertical"
                     android:layout_gravity="center_horizontal"
                     android:padding="10dp"
-                    android:id="@+id/view_photos_layout_button">
+                    android:layout_margin="5dp"
+                    android:id="@+id/view_photos_layout_button"
+                    android:background="#834EBB75">
 
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_photo_album_black_24dp"
                         android:contentDescription="@string/button_to_view_photos" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:text="@string/view_photos"/>
                 </LinearLayout>
 

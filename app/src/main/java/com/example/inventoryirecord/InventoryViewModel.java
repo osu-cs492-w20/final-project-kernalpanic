@@ -35,12 +35,4 @@ public class InventoryViewModel extends ViewModel {
         inventoryRepository.deleteSingleInventoryItem(deleteItem);
     }
 
-    public void tempStoreInventoryItem(InventoryItem inventoryItem) {
-        inventoryRepository.tempStoreOneItem(inventoryItem);
-    }
-
-    public InventoryItem getTempInventoryItem() {
-        return inventoryRepository.getTempStoreItem();
-    }
-
 }

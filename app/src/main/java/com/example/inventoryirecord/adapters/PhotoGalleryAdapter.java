@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventoryirecord.R;
-import com.example.inventoryirecord.utils.PhotoLibraryUtils;
+import com.example.inventoryirecord.photos.BitmapUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
             try {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 4;
-                hashMap.put(image, PhotoLibraryUtils.getSavedImage(image, options));
+                hashMap.put(image, BitmapUtils.getSavedImage(image, options));
             } catch (IOException e) {
                 e.printStackTrace();
                 hashMap.put(image, BitmapFactory.decodeResource(this.context.getResources(),R.drawable.ic_broken_image_black_24dp));

@@ -1,5 +1,6 @@
 package com.example.inventoryirecord;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -47,6 +49,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
 
     private InventoryItem inventoryItem;
     private InventoryViewModel inventoryViewModel;
+    private LinearLayout viewPhotosButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +61,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
             inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
         }
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
-        if(inventoryItem == null) {
-            inventoryItem = inventoryViewModel.getTempInventoryItem();
-        }
         initAllViewHash();
         setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
 
@@ -69,7 +69,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         LinearLayout saveButton = findViewById(R.id.save_edits_single_item_button);
         LinearLayout cancelButton = findViewById(R.id.cancel_edits_single_item_button);
         LinearLayout deleteButton = findViewById(R.id.delete_single_item_button);
-        LinearLayout viewPhotosButton = findViewById(R.id.view_photos_layout_button);
+        viewPhotosButton = findViewById(R.id.view_photos_layout_button);
         editDeleteButtonsLayout = findViewById(R.id.edit_delete_buttons_layout);
         itemDetailsLayout = findViewById(R.id.view_single_item_details_layout);
         editItemDetailsLayout = findViewById(R.id.edit_add_item_fragment);
@@ -110,8 +110,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
                 }
             });
 
-
-
     }
 
     private void handleDeleteItem() {
@@ -134,10 +132,10 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     }
 
     private void handlePhotoButtonClick() {
-        storeActivityItem();
+        viewPhotosButton.setBackgroundColor(0x83265A38);
         Intent photosActivity = new Intent(this, ViewEditPhotosActivity.class);
         photosActivity.putExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM, inventoryItem);
-        startActivity(photosActivity);
+        startActivityForResult(photosActivity, ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE);
     }
 
     private void handleEditForm() {
@@ -250,7 +248,19 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void storeActivityItem() {
-        inventoryViewModel.tempStoreInventoryItem(inventoryItem);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
+            if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
+                inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewPhotosButton.setBackgroundColor(0x834EBB75);
     }
 }
