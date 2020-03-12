@@ -116,6 +116,7 @@ public class AddItemActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Returned receipt image.
+        Log.d("requestCode", "CODE: " + requestCode);
         if (requestCode == RECEIPT_IMAGE) {
             if (resultCode == RESULT_OK) {
                 // Do stuff with receipt image uri here.
@@ -134,8 +135,8 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do stuff with object image uri here.
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
                 //Example of URI
-//                TextView name = findViewById(R.id.add_single_item_name_text_view);
-//                name.setText(mSavedObjectURI);
+                TextView name = findViewById(R.id.add_single_item_name_text_view);
+                name.setText(mSavedObjectURI);
                 if (mSavedObjectURI != null) {
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);
                 }
