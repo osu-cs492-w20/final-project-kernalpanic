@@ -22,6 +22,8 @@ import com.example.inventoryirecord.data.azure.ReceiptResult;
 import com.example.inventoryirecord.photos.BitmapUtils;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int REQUEST_STORAGE_PERMISSION = 200;
@@ -60,6 +62,10 @@ public class AddItemActivity extends AppCompatActivity {
 
         // Build new inventory item. Can be used without any photo data.
         mInventoryItem = new InventoryItem();
+        setValuesForTesting();
+        mInventoryItem.receiptPics = new ArrayList<>();
+        mInventoryItem.itemPics = new ArrayList<>();
+
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
         //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
@@ -243,10 +249,29 @@ public class AddItemActivity extends AppCompatActivity {
 
         save = findViewById(R.id.edit_single_item_date_purch_text_view);
         mInventoryItem.dateAdded = save.getText().toString();
-        //if (mSavedObjectURI != null)
-        //    mInventoryItem.itemPics.add(mSavedObjectURI);
-        //if (mSavedReceiptURI != null)
-        //    mInventoryItem.receiptPics.add(mSavedReceiptURI);
+
+
+
+        if (mSavedObjectURI != null)
+            mInventoryItem.itemPics.add(mSavedObjectURI);
+        if (mSavedReceiptURI != null)
+            mInventoryItem.receiptPics.add(mSavedReceiptURI);
+    }
+
+    private void setValuesForTesting(){
+        mInventoryItem.itemName = "temp";
+        mInventoryItem.otherNotes = "temp";
+        mInventoryItem.value = 0.0;
+        mInventoryItem.itemType = "temp";
+        mInventoryItem.dateAdded = "temp";
+        mInventoryItem.itemID = "temp";
+        mInventoryItem.make = "temp";
+        mInventoryItem.model = "temp";
+        mInventoryItem.serialNumber = "temp";
+        mInventoryItem.newItem = true;
+        mInventoryItem.pricePaid = 0.0;
+        mInventoryItem.datePurchased = "temp";
+        mInventoryItem.dateOfManufacture = "temp";
     }
 
     @Override
