@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {InventoryItem.class, ItemPhotos.class}, version = 1)
+@Database(entities = {InventoryItem.class, ItemPhoto.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract InventoryItemDao inventoryItemDao();
 

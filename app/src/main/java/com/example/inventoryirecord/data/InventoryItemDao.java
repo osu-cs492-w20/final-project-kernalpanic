@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 @Dao
 public interface InventoryItemDao {
 
@@ -21,4 +23,13 @@ public interface InventoryItemDao {
 
     @Query("SELECT * FROM items where itemID=:itemID LIMIT 1")
     LiveData<InventoryItem> getItemByID(String itemID);
+
+    @Query("SELECT SUM(value) FROM items")
+    LiveData<Double> getTotalValue();
+
+    @Query("SELECT * FROM items")
+    LiveData<List<InventoryItem>> getAll();
+
+    @Query("SELECT COUNT(*) FROM items")
+    LiveData<Integer> getTotalItemsNumber();
 }
