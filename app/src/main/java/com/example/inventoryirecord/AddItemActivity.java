@@ -13,16 +13,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.azure.ReceiptResult;
+import com.example.inventoryirecord.photos.BitmapUtils;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
-
-import java.util.Set;
 
 public class AddItemActivity extends AppCompatActivity {
     private static final int REQUEST_STORAGE_PERMISSION = 200;
@@ -30,6 +27,9 @@ public class AddItemActivity extends AppCompatActivity {
     private static final int RECEIPT_IMAGE = 1;
     // ID for returning object image.
     private static final int OBJECT_IMAGE = 2;
+
+    private boolean receipt_update;
+    private boolean object_update;
 
     private String mSavedReceiptURI;
     private String mSavedObjectURI;
@@ -52,7 +52,6 @@ public class AddItemActivity extends AppCompatActivity {
         saveCancelButton = findViewById(R.id.save_cancel_button_layout);
         saveCancelButton.setVisibility(View.VISIBLE);
 
-        test = findViewById(R.id.edit_single_item_name_text_view);
 
         showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
             @Override
@@ -69,9 +68,11 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
-                String tokens[] = s.split(":");
-                test = findViewById(R.id.edit_single_item_type_text_view);
-                test.setText(tokens[0]);
+                if (object_update) {
+                    String tokens[] = s.split(":");
+                    test = findViewById(R.id.edit_single_item_type_text_view);
+                    test.setText(tokens[0]);
+                }
             }
         });
 
@@ -82,10 +83,21 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
-                Gson gson = new Gson();
 
+                if (receipt_update) {
+                    test = findViewById(R.id.edit_single_item_name_text_view);
+                    test.setText(s.MerchantName.text);
 
-                test.setText("receipt analyse result:" + new Gson().toJson(s));
+                    test = findViewById(R.id.edit_single_item_notes_text_view);
+                    test.setText(s.MerchantAddress.text);
+
+                    test = findViewById(R.id.edit_single_item_value_text_view);
+                    test.setText(s.Total.text);
+
+                    test = findViewById(R.id.edit_single_item_date_purch_text_view);
+                    test.setText(s.TransactionDate.text);
+                    //test.setText("receipt analyse result:" + new Gson().toJson(s));
+                }
             }
         });
 
@@ -137,6 +149,8 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do stuff with receipt image uri here.
                 mSavedReceiptURI = data.getStringExtra("IMAGE_URI");
                 if (mSavedReceiptURI != null) {
+                    receipt_update = true;
+                    object_update = false;
                     showReceiptAnalyseViewModel.loadAnalyseResults(mSavedReceiptURI);
                 }
             }
@@ -147,6 +161,8 @@ public class AddItemActivity extends AppCompatActivity {
                 // Do stuff with object image uri here.
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
                 if (mSavedObjectURI != null) {
+                    object_update = true;
+                    receipt_update = false;
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);
                 }
             }
@@ -165,6 +181,15 @@ public class AddItemActivity extends AppCompatActivity {
                     REQUEST_STORAGE_PERMISSION);
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        if (mSavedObjectURI != null){
+            BitmapUtils.deleteImageFile(mSavedObjectURI);
+        }
+        finish();
         return true;
     }
 }
