@@ -52,15 +52,6 @@ public class AddItemActivity extends AppCompatActivity {
         saveCancelButton = findViewById(R.id.save_cancel_button_layout);
         saveCancelButton.setVisibility(View.VISIBLE);
 
-
-        showReceiptAnalyseViewModel.getSearchResults().observe(this, new Observer<ReceiptResult>() {
-            @Override
-            public void onChanged(ReceiptResult gitHubRepos) {
-                if (gitHubRepos != null)
-                    test.setText(new Gson().toJson(gitHubRepos));
-            }
-        });
-
         //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
             @Override
@@ -146,6 +137,7 @@ public class AddItemActivity extends AppCompatActivity {
         Log.d("requestCode", "CODE: " + requestCode);
         if (requestCode == RECEIPT_IMAGE) {
             if (resultCode == RESULT_OK) {
+                test = null;
                 // Do stuff with receipt image uri here.
                 mSavedReceiptURI = data.getStringExtra("IMAGE_URI");
                 if (mSavedReceiptURI != null) {
@@ -158,6 +150,7 @@ public class AddItemActivity extends AppCompatActivity {
         // Returned object image.
         if (requestCode == OBJECT_IMAGE) {
             if (resultCode == RESULT_OK) {
+                test = null;
                 // Do stuff with object image uri here.
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
                 if (mSavedObjectURI != null) {
