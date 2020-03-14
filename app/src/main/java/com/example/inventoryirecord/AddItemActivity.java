@@ -83,8 +83,12 @@ public class AddItemActivity extends AppCompatActivity {
                 }
                 if (object_update) {
                     String tokens[] = s.split(":");
-                    test = findViewById(R.id.edit_single_item_type_text_view);
-                    test.setText(tokens[0]);
+                    try {
+                        test = findViewById(R.id.edit_single_item_type_text_view);
+                        test.setText(tokens[0]);
+                    } catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -97,19 +101,8 @@ public class AddItemActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (receipt_update && s != null) {
-                    Log.d("receipt_update", "value: " + s);
-                    test = findViewById(R.id.edit_single_item_name_text_view);
-                    test.setText(s.MerchantName.text);
-
-                    test = findViewById(R.id.edit_single_item_notes_text_view);
-                    test.setText(s.MerchantAddress.text);
-
-                    test = findViewById(R.id.edit_single_item_value_text_view);
-                    test.setText(s.Total.text);
-
-                    test = findViewById(R.id.edit_single_item_date_purch_text_view);
-                    test.setText(s.TransactionDate.text);
+                if (receipt_update) {
+                    setReceiptFields(s);
                 }
             }
         });
@@ -305,6 +298,33 @@ public class AddItemActivity extends AppCompatActivity {
             iCode += sCode.charAt(i);
 
         return iCode;
+    }
+
+    private void setReceiptFields(ReceiptResult s){
+        try {
+            test = findViewById(R.id.edit_single_item_name_text_view);
+            test.setText(s.MerchantName.text);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        try {
+            test = findViewById(R.id.edit_single_item_notes_text_view);
+            test.setText(s.MerchantAddress.text);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        try {
+            test = findViewById(R.id.edit_single_item_value_text_view);
+            test.setText(s.Total.text);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        try {
+            test = findViewById(R.id.edit_single_item_date_purch_text_view);
+            test.setText(s.TransactionDate.text);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
