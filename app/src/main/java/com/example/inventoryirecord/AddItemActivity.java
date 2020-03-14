@@ -83,12 +83,8 @@ public class AddItemActivity extends AppCompatActivity {
                 }
                 if (object_update) {
                     String tokens[] = s.split(":");
-                    try {
-                        test = findViewById(R.id.edit_single_item_type_text_view);
-                        test.setText(tokens[0]);
-                    } catch (NullPointerException e){
-                        e.printStackTrace();
-                    }
+                    test = findViewById(R.id.edit_single_item_type_text_view);
+                    test.setText(tokens[0]);
                 }
             }
         });
@@ -330,5 +326,3 @@ public class AddItemActivity extends AppCompatActivity {
         return true;
     }
 }
-
-
