@@ -36,6 +36,8 @@ public class AddImageActivity extends AppCompatActivity {
     private Bitmap mResultsBitmap;
     private String mSavedPhotoURI;
 
+    private boolean azureFlag;
+
     private int CODE;
 
     @Override
@@ -48,21 +50,23 @@ public class AddImageActivity extends AppCompatActivity {
             if (intent != null) {
                 CODE = intent.getIntExtra("CODE", CODE);
 
-                Button addReceiptButton = findViewById(R.id.add_ai_button);
-                Button addButton = findViewById(R.id.add_manually_button);
+                Button addAIButton = findViewById(R.id.add_ai_button);
+                Button addManuallyButton = findViewById(R.id.add_manually_button);
                 // Add text based on image code.
-                setButtonText(addReceiptButton, addButton);
+                setButtonText(addAIButton, addManuallyButton);
                 if (CODE == 1 || CODE == 2) {
                     // If adding using AI.
-                    addReceiptButton.setOnClickListener(new View.OnClickListener() {
+                    addAIButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            azureFlag = true;
                             getPhoto();
                         }
                     });
-                    addButton.setOnClickListener(new View.OnClickListener() {
+                    addManuallyButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            azureFlag = false;
                             getPhoto();
                         }
                     });
@@ -164,6 +168,7 @@ public class AddImageActivity extends AppCompatActivity {
 
         Intent data = new Intent();
         data.putExtra("IMAGE_URI", mSavedPhotoURI);
+        data.putExtra("BUTTON_CODE", azureFlag);
         setResult(RESULT_OK, data);
         finish();
     }
