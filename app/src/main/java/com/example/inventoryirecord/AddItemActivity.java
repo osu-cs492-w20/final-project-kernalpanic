@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,12 +19,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
-import com.example.inventoryirecord.data.InventoryRepository;
+
 import com.example.inventoryirecord.data.azure.ReceiptResult;
 import com.example.inventoryirecord.photos.BitmapUtils;
-import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 
 public class AddItemActivity extends AppCompatActivity {
@@ -39,6 +44,8 @@ public class AddItemActivity extends AppCompatActivity {
     private String mSavedReceiptURI;
     private String mSavedObjectURI;
     private TextView test;
+
+    private boolean azureFlag;
 
     private LinearLayout editAddItemLayout;
     private LinearLayout saveCancelButton;
@@ -62,7 +69,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         // Build new inventory item. Can be used without any photo data.
         mInventoryItem = new InventoryItem();
-        setValuesForTesting();
+        //setValuesForTesting();
         mInventoryItem.receiptPics = new ArrayList<>();
         mInventoryItem.itemPics = new ArrayList<>();
 
@@ -90,7 +97,8 @@ public class AddItemActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (receipt_update) {
+                if (receipt_update && s != null) {
+                    Log.d("receipt_update", "value: " + s);
                     test = findViewById(R.id.edit_single_item_name_text_view);
                     test.setText(s.MerchantName.text);
 
@@ -179,8 +187,9 @@ public class AddItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 test = null;
                 // Do stuff with receipt image uri here.
+                azureFlag = data.getExtras().getBoolean("BUTTON_CODE");
                 mSavedReceiptURI = data.getStringExtra("IMAGE_URI");
-                if (mSavedReceiptURI != null) {
+                if (mSavedReceiptURI != null && azureFlag) {
                     receipt_update = true;
                     object_update = false;
                     showReceiptAnalyseViewModel.loadAnalyseResults(mSavedReceiptURI);
@@ -192,8 +201,9 @@ public class AddItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 test = null;
                 // Do stuff with object image uri here.
+                azureFlag = data.getExtras().getBoolean("BUTTON_CODE");
                 mSavedObjectURI = data.getStringExtra("IMAGE_URI");
-                if (mSavedObjectURI != null) {
+                if (mSavedObjectURI != null && azureFlag) {
                     object_update = true;
                     receipt_update = false;
                     showReceiptAnalyseViewModel.loadDetectObjects(mSavedObjectURI);
@@ -218,9 +228,10 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     private void handleSaveForm(){
-        buildInventory();
-        inventoryViewModel.addSingleInventoryItem(mInventoryItem);
-        finish();
+        if(buildInventory()) {
+            inventoryViewModel.addSingleInventoryItem(mInventoryItem);
+            finish();
+        }
     }
 
     private void handleCancelForm(){
@@ -233,16 +244,40 @@ public class AddItemActivity extends AppCompatActivity {
         finish();
         return;
     }
-
-    private void buildInventory(){
+    // Going to be a messy method of checks. Maybe clean up later?
+    private boolean buildInventory(){
+        CheckBox newItem = findViewById(R.id.edit_single_item_new_check_box);
         TextView save = findViewById(R.id.edit_single_item_name_text_view);
+        String timeCode = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+
+        mInventoryItem.itemID = Integer.toString(textSum(timeCode));
+
         mInventoryItem.itemName = save.getText().toString();
+        if (mInventoryItem.itemName.equals("")){
+            Toast.makeText(getApplicationContext(),"Please Enter a Name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        mInventoryItem.newItem = newItem.isChecked();
 
         save = findViewById(R.id.edit_single_item_notes_text_view);
         mInventoryItem.otherNotes = save.getText().toString();
 
+        save = findViewById(R.id.edit_single_item_make_text_view);
+        mInventoryItem.make = save.getText().toString();
+
+        save = findViewById(R.id.edit_single_item_model_text_view);
+        mInventoryItem.model = save.getText().toString();
+
+        save = findViewById(R.id.edit_single_item_date_purch_text_view);
+        mInventoryItem.datePurchased = save.getText().toString();
+
         save = findViewById(R.id.edit_single_item_value_text_view);
-        mInventoryItem.value = Double.valueOf(save.getText().toString());
+        try {
+            mInventoryItem.value = Double.valueOf(save.getText().toString());
+        } catch(NumberFormatException e){
+            mInventoryItem.value = 0.0;
+        }
 
         save = findViewById(R.id.edit_single_item_type_text_view);
         mInventoryItem.itemType = save.getText().toString();
@@ -250,28 +285,26 @@ public class AddItemActivity extends AppCompatActivity {
         save = findViewById(R.id.edit_single_item_date_purch_text_view);
         mInventoryItem.dateAdded = save.getText().toString();
 
+        save = findViewById(R.id.edit_single_item_date_manu_text_view);
+        mInventoryItem.dateOfManufacture = save.getText().toString();
 
+        save = findViewById(R.id.edit_single_item_serial_text_view);
+        mInventoryItem.serialNumber = save.getText().toString();
 
         if (mSavedObjectURI != null)
             mInventoryItem.itemPics.add(mSavedObjectURI);
         if (mSavedReceiptURI != null)
             mInventoryItem.receiptPics.add(mSavedReceiptURI);
-    }
 
-    private void setValuesForTesting(){
-        mInventoryItem.itemName = "temp";
-        mInventoryItem.otherNotes = "temp";
-        mInventoryItem.value = 0.0;
-        mInventoryItem.itemType = "temp";
-        mInventoryItem.dateAdded = "temp";
-        mInventoryItem.itemID = "temp";
-        mInventoryItem.make = "temp";
-        mInventoryItem.model = "temp";
-        mInventoryItem.serialNumber = "temp";
-        mInventoryItem.newItem = true;
-        mInventoryItem.pricePaid = 0.0;
-        mInventoryItem.datePurchased = "temp";
-        mInventoryItem.dateOfManufacture = "temp";
+        return true;
+    }
+    private int textSum(String sCode){
+        int iCode = 0;
+
+        for(int i = 0; i < sCode.length();i++)
+            iCode += sCode.charAt(i);
+
+        return iCode;
     }
 
     @Override

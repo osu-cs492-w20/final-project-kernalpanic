@@ -70,7 +70,7 @@ public class BitmapUtils {
             savedImagePath = imageFile.getAbsolutePath();
             try {
                 OutputStream fOut = new FileOutputStream(imageFile);
-                image.compress(Bitmap.CompressFormat.JPEG, 70, fOut);
+                image.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
                 fOut.close();
             } catch (Exception e) {
                 e.printStackTrace();
