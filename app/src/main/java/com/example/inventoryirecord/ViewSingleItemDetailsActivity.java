@@ -167,7 +167,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
         editItemDetailsLayout.setVisibility(View.INVISIBLE);
         itemDetailsLayout.setVisibility(View.VISIBLE);
-        inventoryViewModel.updateSingleInventoryItem(inventoryItem);
+        inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
     }
     private void handleCancelForm() {
         editDeleteButtonsLayout.setVisibility(View.VISIBLE);

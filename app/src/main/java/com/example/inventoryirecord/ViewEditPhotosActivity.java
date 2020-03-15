@@ -181,12 +181,12 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     Bitmap image = BitmapFactory.decodeStream(inputStream);
                     if (isForReceipt) {
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
-                        inventoryItem.receiptPics.add(path);
+//                        inventoryItem.receiptPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
 //                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
-                        inventoryItem.itemPics.add(path);
+//                        inventoryItem.itemPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
 //                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
@@ -259,11 +259,11 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     BitmapUtils.deleteImageFile(photoLocation.path);
                     if(isForReceipt) {
                         inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, true));
-                        inventoryItem.receiptPics.remove(photoLocation.path);
+//                        inventoryItem.receiptPics.remove(photoLocation.path);
 //                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
                         inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, false));
-                        inventoryItem.itemPics.remove(photoLocation.path);
+//                        inventoryItem.itemPics.remove(photoLocation.path);
 //                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     imageView.setVisibility(View.INVISIBLE);
