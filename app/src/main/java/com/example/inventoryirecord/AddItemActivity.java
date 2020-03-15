@@ -87,6 +87,7 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 if (s == null) {
+                    Toast.makeText(getApplicationContext(),"Failed to ID Object", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (object_update) {
@@ -337,16 +338,5 @@ public class AddItemActivity extends AppCompatActivity {
         }
         finish();
         return true;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mSavedObjectURI != null){
-            BitmapUtils.deleteImageFile(mSavedObjectURI);
-        }
-        if (mSavedReceiptURI != null){
-            BitmapUtils.deleteImageFile(mSavedObjectURI);
-        }
     }
 }

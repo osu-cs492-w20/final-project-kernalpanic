@@ -269,7 +269,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
             if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
                 inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
 //                inventoryViewModel.updateSingleInventoryItem(inventoryItem);
-                inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
+//                inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
             }
         }
     }
