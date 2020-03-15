@@ -52,8 +52,10 @@ public class AddItemActivity extends AppCompatActivity {
 
     private InventoryItem mInventoryItem;
     private InventoryViewModel inventoryViewModel;
+    private InventorySaveViewModel inventorySaveViewModel;
 
     private AzureViewModel showReceiptAnalyseViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,12 @@ public class AddItemActivity extends AppCompatActivity {
         //setValuesForTesting();
         mInventoryItem.receiptPics = new ArrayList<>();
         mInventoryItem.itemPics = new ArrayList<>();
+
+        // Get access to DB view model.
+        inventorySaveViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(InventorySaveViewModel.class);
 
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
         //observe the change of best match object
@@ -218,7 +226,8 @@ public class AddItemActivity extends AppCompatActivity {
 
     private void handleSaveForm(){
         if(buildInventory()) {
-            inventoryViewModel.addSingleInventoryItem(mInventoryItem);
+            //inventoryViewModel.addSingleInventoryItem(mInventoryItem);
+            inventorySaveViewModel.insertInventoryItem(mInventoryItem);
             finish();
         }
     }
@@ -324,5 +333,16 @@ public class AddItemActivity extends AppCompatActivity {
         }
         finish();
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mSavedObjectURI != null){
+            BitmapUtils.deleteImageFile(mSavedObjectURI);
+        }
+        if (mSavedReceiptURI != null){
+            BitmapUtils.deleteImageFile(mSavedObjectURI);
+        }
     }
 }
