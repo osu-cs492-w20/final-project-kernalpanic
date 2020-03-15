@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.inventoryirecord.adapters.PhotoGalleryAdapter;
 import com.example.inventoryirecord.data.InventoryItem;
+import com.example.inventoryirecord.data.ItemPhoto;
 import com.example.inventoryirecord.photos.BitmapUtils;
 
 import java.io.IOException;
@@ -51,6 +52,8 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     private Button addItemPhotoButton;
     private Button addReceiptPhotoButton;
 
+    private InventorySaveViewModel inventorySaveViewModel;
+
     private String currentPhoto;
 
     @Override
@@ -67,6 +70,11 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         if (inventoryItem != null && inventoryItem.receiptPics == null) {
             inventoryItem.receiptPics = new ArrayList<>();
         }
+
+        inventorySaveViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(InventorySaveViewModel.class);
 
         StaggeredGridLayoutManager photoStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         RecyclerView itemPhotosRecyclerView = findViewById(R.id.item_photo_rec_view);
@@ -153,10 +161,14 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     InputStream inputStream = getApplicationContext().getContentResolver().openInputStream(data.getData());
                     Bitmap image = BitmapFactory.decodeStream(inputStream);
                     if (isForReceipt) {
-                        inventoryItem.receiptPics.add(BitmapUtils.saveImage(getApplicationContext(), image, false));
+                        String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
+                        inventoryItem.receiptPics.add(path);
+                        inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
                         receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
-                        inventoryItem.itemPics.add(BitmapUtils.saveImage(getApplicationContext(), image, false));
+                        String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
+                        inventoryItem.itemPics.add(path);
+                        inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
                         itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     if (inputStream != null) {
@@ -227,9 +239,11 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 public void onClick(View v) {
                     BitmapUtils.deleteImageFile(photoLocation);
                     if(isForReceipt) {
+                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation, inventoryItem.itemID, true));
                         inventoryItem.receiptPics.remove(photoLocation);
                         receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
+                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation, inventoryItem.itemID, false));
                         inventoryItem.itemPics.remove(photoLocation);
                         itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }

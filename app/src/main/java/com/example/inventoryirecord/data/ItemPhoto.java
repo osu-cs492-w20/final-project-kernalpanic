@@ -29,6 +29,15 @@ public class ItemPhoto implements Serializable {
     // true for receipt, false for object
     public Boolean isReceipt;
 
+    public ItemPhoto() {
+    }
+
+    public ItemPhoto(@NotNull String path, String itemID, Boolean isReceipt) {
+        this.path = path;
+        this.itemID = itemID;
+        this.isReceipt = isReceipt;
+    }
+
     public static List<ItemPhoto> buildPhotosFromInventoryItem(InventoryItem inventoryItem) {
         List<ItemPhoto> itemPhotos = new ArrayList<>();
 

@@ -20,6 +20,7 @@ public class ViewInventoryActivity extends AppCompatActivity implements ViewItem
     private ViewItemAdapter viewItemAdapter;
     private RecyclerView inventoryItemsRecyclerView;
     private InventoryViewModel inventoryViewModel;
+    private InventorySaveViewModel inventorySaveViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +33,24 @@ public class ViewInventoryActivity extends AppCompatActivity implements ViewItem
         viewItemAdapter = new ViewItemAdapter(this);
         inventoryItemsRecyclerView.setAdapter(viewItemAdapter);
 
-        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
-        inventoryViewModel.getInventoryItemList().observe(this, new Observer<List<InventoryItem>>() {
+//        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
+        inventorySaveViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(InventorySaveViewModel.class);
+
+        inventorySaveViewModel.getAllItems().observe(this, new Observer<List<InventoryItem>>() {
             @Override
             public void onChanged(List<InventoryItem> inventoryItems) {
                 viewItemAdapter.updateInventoryItems(inventoryItems);
             }
         });
+//        inventoryViewModel.getInventoryItemList().observe(this, new Observer<List<InventoryItem>>() {
+//            @Override
+//            public void onChanged(List<InventoryItem> inventoryItems) {
+//                viewItemAdapter.updateInventoryItems(inventoryItems);
+//            }
+//        });
     }
 
     @Override
