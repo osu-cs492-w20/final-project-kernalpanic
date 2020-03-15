@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
+import com.example.inventoryirecord.photos.BitmapUtils;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -118,6 +119,13 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        for(String location : inventoryItem.itemPics) {
+                            BitmapUtils.deleteImageFile(location);
+                        }
+
+                        for(String location : inventoryItem.receiptPics) {
+                            BitmapUtils.deleteImageFile(location);
+                        }
                         inventoryViewModel.deleteSingleInventoryItem(inventoryItem);
                         finish();
                     }
