@@ -22,13 +22,12 @@ import static androidx.room.ForeignKey.CASCADE;
 public class ItemPhoto implements Serializable {
     @PrimaryKey
     @NotNull
-    public String photoID;
+    public String path;
 
     public String itemID;
 
     // true for receipt, false for object
     public Boolean isReceipt;
-    public String path;
 
     public static List<ItemPhoto> buildPhotosFromInventoryItem(InventoryItem inventoryItem) {
         List<ItemPhoto> itemPhotos = new ArrayList<>();
@@ -38,7 +37,6 @@ public class ItemPhoto implements Serializable {
             photo.isReceipt = false;
             photo.itemID = inventoryItem.itemID;
             photo.path = path;
-            photo.photoID = UUID.randomUUID().toString();
             itemPhotos.add(photo);
         }
 
@@ -47,8 +45,7 @@ public class ItemPhoto implements Serializable {
             photo.isReceipt = true;
             photo.itemID = inventoryItem.itemID;
             photo.path = path;
-            photo.photoID = UUID.randomUUID().toString();
-
+            itemPhotos.add(photo);
         }
         return itemPhotos;
 

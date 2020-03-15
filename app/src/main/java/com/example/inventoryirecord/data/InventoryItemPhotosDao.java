@@ -12,10 +12,16 @@ import java.util.List;
 public interface InventoryItemPhotosDao {
 
     @Insert
-    void insert(ItemPhoto... itemPhotos);
+    void insert(List<ItemPhoto> itemPhotos);
+
+    @Insert
+    void insertOnePhoto(ItemPhoto itemPhoto);
 
     @Delete
     void delete(ItemPhoto itemPhoto);
+
+    @Delete
+    void deleteAllPhotos(List<ItemPhoto> itemPhotos);
 
     @Query("SELECT * FROM photos where itemID=:itemID and isReceipt=0")
     List<ItemPhoto> getItemReceiptPhotos(String itemID);

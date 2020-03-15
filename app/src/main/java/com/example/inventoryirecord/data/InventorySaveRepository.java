@@ -44,6 +44,22 @@ public class InventorySaveRepository {
         return mPhotosDAO.getObjectPhotoNumbers();
     }
 
+    public void deleteInventoryItem(InventoryItem inventoryItem) {
+        new DeleteInventoryItemAsyncTask(mItemsDAO, mPhotosDAO).execute(inventoryItem);
+    }
+
+    public void updateInventoryItemFields(InventoryItem inventoryItem) {
+        new UpdateAsyncTask(mItemsDAO).doInBackground(inventoryItem);
+    }
+
+    public void deletePhoto(ItemPhoto itemPhoto) {
+        new DeletePhotoAsyncTask(mPhotosDAO).execute(itemPhoto);
+    }
+
+    public void insertPhoto(ItemPhoto itemPhoto) {
+        new InsertPhotoAsyncTask(mPhotosDAO).execute(itemPhoto);
+    }
+
     private static class InsertAsyncTask extends AsyncTask<InventoryItem, Void, Void> {
         private InventoryItemDao mAsyncTaskDAO;
         private InventoryItemPhotosDao mPhotosDAO;
@@ -57,7 +73,67 @@ public class InventorySaveRepository {
         protected Void doInBackground(InventoryItem... inventoryItems) {
             mAsyncTaskDAO.insert(inventoryItems[0]);
             List<ItemPhoto> itemPhotos = ItemPhoto.buildPhotosFromInventoryItem(inventoryItems[0]);
-            mPhotosDAO.insert((ItemPhoto) itemPhotos);
+            mPhotosDAO.insert(itemPhotos);
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<InventoryItem, Void, Void> {
+        private InventoryItemDao mAsyncTaskDAO;
+
+        UpdateAsyncTask(InventoryItemDao inventoryItemDao) {
+            mAsyncTaskDAO = inventoryItemDao;
+        }
+
+        @Override
+        protected Void doInBackground(InventoryItem... inventoryItems) {
+            mAsyncTaskDAO.update(inventoryItems[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteInventoryItemAsyncTask extends AsyncTask<InventoryItem, Void, Void> {
+        private InventoryItemDao mAsyncTaskDAO;
+        private InventoryItemPhotosDao mPhotosDAO;
+
+        DeleteInventoryItemAsyncTask(InventoryItemDao mAsyncTaskDAO, InventoryItemPhotosDao mPhotosDAO) {
+            this.mAsyncTaskDAO = mAsyncTaskDAO;
+            this.mPhotosDAO = mPhotosDAO;
+        }
+
+        @Override
+        protected Void doInBackground(InventoryItem... inventoryItems) {
+            mAsyncTaskDAO.delete(inventoryItems[0]);
+            List<ItemPhoto> itemPhotos = ItemPhoto.buildPhotosFromInventoryItem(inventoryItems[0]);
+            mPhotosDAO.deleteAllPhotos(itemPhotos);
+            return null;
+        }
+    }
+
+    private static class DeletePhotoAsyncTask extends AsyncTask<ItemPhoto, Void, Void> {
+        private InventoryItemPhotosDao mPhotosDAO;
+
+        DeletePhotoAsyncTask(InventoryItemPhotosDao mPhotosDAO) {
+            this.mPhotosDAO = mPhotosDAO;
+        }
+
+        @Override
+        protected Void doInBackground(ItemPhoto... itemPhotos) {
+            mPhotosDAO.delete(itemPhotos[0]);
+            return null;
+        }
+    }
+
+    private static class InsertPhotoAsyncTask extends AsyncTask<ItemPhoto, Void, Void> {
+        private InventoryItemPhotosDao mPhotosDAO;
+
+        InsertPhotoAsyncTask(InventoryItemPhotosDao mPhotosDAO) {
+            this.mPhotosDAO = mPhotosDAO;
+        }
+
+        @Override
+        protected Void doInBackground(ItemPhoto... itemPhotos) {
+            mPhotosDAO.insertOnePhoto(itemPhotos[0]);
             return null;
         }
     }
