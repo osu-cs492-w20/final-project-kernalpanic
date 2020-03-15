@@ -57,7 +57,7 @@ public class InventorySaveRepository {
     }
 
     public void updateInventoryItemFields(InventoryItem inventoryItem) {
-        new UpdateAsyncTask(mItemsDAO).doInBackground(inventoryItem);
+        new UpdateAsyncTask(mItemsDAO).execute(inventoryItem);
     }
 
     public void deletePhoto(ItemPhoto itemPhoto) {

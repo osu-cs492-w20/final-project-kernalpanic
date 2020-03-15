@@ -167,7 +167,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         setViewText(textViewHashMap, Objects.requireNonNull(inventoryItem), false);
         editItemDetailsLayout.setVisibility(View.INVISIBLE);
         itemDetailsLayout.setVisibility(View.VISIBLE);
-        inventoryViewModel.updateSingleInventoryItem(inventoryItem);
+        inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
     }
     private void handleCancelForm() {
         editDeleteButtonsLayout.setVisibility(View.VISIBLE);
@@ -269,7 +269,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
             if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
                 inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
 //                inventoryViewModel.updateSingleInventoryItem(inventoryItem);
-                inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
+//                inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
             }
         }
     }

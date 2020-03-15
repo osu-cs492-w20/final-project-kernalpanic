@@ -52,8 +52,10 @@ public class AddItemActivity extends AppCompatActivity {
 
     private InventoryItem mInventoryItem;
     private InventoryViewModel inventoryViewModel;
+    private InventorySaveViewModel inventorySaveViewModel;
 
     private AzureViewModel showReceiptAnalyseViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +75,29 @@ public class AddItemActivity extends AppCompatActivity {
         mInventoryItem.receiptPics = new ArrayList<>();
         mInventoryItem.itemPics = new ArrayList<>();
 
+        // Get access to DB view model.
+        inventorySaveViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(InventorySaveViewModel.class);
+
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
         //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if (s == null) {
+                    Toast.makeText(getApplicationContext(),"Failed to ID Object", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (object_update) {
                     String tokens[] = s.split(":");
                     test = findViewById(R.id.edit_single_item_type_text_view);
-                    test.setText(tokens[0]);
+                    if (tokens[0].equals("")){
+                        Toast.makeText(getApplicationContext(),"Failed to ID Object", Toast.LENGTH_SHORT).show();
+                    }else {
+                        test.setText(tokens[0]);
+                    }
                 }
             }
         });
@@ -218,7 +231,8 @@ public class AddItemActivity extends AppCompatActivity {
 
     private void handleSaveForm(){
         if(buildInventory()) {
-            inventoryViewModel.addSingleInventoryItem(mInventoryItem);
+            //inventoryViewModel.addSingleInventoryItem(mInventoryItem);
+            inventorySaveViewModel.insertInventoryItem(mInventoryItem);
             finish();
         }
     }
