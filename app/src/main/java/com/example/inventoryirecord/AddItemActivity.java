@@ -92,7 +92,11 @@ public class AddItemActivity extends AppCompatActivity {
                 if (object_update) {
                     String tokens[] = s.split(":");
                     test = findViewById(R.id.edit_single_item_type_text_view);
-                    test.setText(tokens[0]);
+                    if (tokens[0].equals("")){
+                        Toast.makeText(getApplicationContext(),"Failed to ID Object", Toast.LENGTH_SHORT).show();
+                    }else {
+                        test.setText(tokens[0]);
+                    }
                 }
             }
         });
