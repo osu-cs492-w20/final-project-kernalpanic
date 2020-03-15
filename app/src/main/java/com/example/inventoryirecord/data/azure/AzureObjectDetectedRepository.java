@@ -47,6 +47,10 @@ public class AzureObjectDetectedRepository implements AzureObjectDetectAsyncTask
 
     }
 
+    public LiveData<Status> getLoadingStatus() {
+        return mLoadingStatus;
+    }
+
     public LiveData<Set<String>> getObjectList() {
         return mObjects;
     }
