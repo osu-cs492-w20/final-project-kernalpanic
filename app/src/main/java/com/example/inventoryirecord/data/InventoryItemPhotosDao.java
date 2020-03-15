@@ -1,5 +1,7 @@
 package com.example.inventoryirecord.data;
 
+import android.widget.LinearLayout;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -23,18 +25,18 @@ public interface InventoryItemPhotosDao {
     @Delete
     void deleteAllPhotos(List<ItemPhoto> itemPhotos);
 
-    @Query("SELECT * FROM photos where itemID=:itemID and isReceipt=0")
-    List<ItemPhoto> getItemReceiptPhotos(String itemID);
-
     @Query("SELECT * FROM photos where itemID=:itemID and isReceipt=1")
-    List<ItemPhoto> getItemObjectPhotos(String itemID);
+    LiveData<List<ItemPhoto>> getItemReceiptPhotos(String itemID);
+
+    @Query("SELECT * FROM photos where itemID=:itemID and isReceipt=0")
+    LiveData<List<ItemPhoto>> getItemObjectPhotos(String itemID);
 
     @Query("SELECT * FROM photos where itemID=:itemID")
-    List<ItemPhoto> getItemPhotos(String itemID);
-
-    @Query("SELECT COUNT(*) FROM photos where isReceipt=0")
-    LiveData<Integer> getReceiptNumbers();
+    LiveData<List<ItemPhoto>> getItemPhotos(String itemID);
 
     @Query("SELECT COUNT(*) FROM photos where isReceipt=1")
+    LiveData<Integer> getReceiptNumbers();
+
+    @Query("SELECT COUNT(*) FROM photos where isReceipt=0")
     LiveData<Integer> getObjectPhotoNumbers();
 }

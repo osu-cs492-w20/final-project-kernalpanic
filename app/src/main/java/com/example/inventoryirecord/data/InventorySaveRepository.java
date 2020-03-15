@@ -36,6 +36,14 @@ public class InventorySaveRepository {
         return mItemsDAO.getAll();
     }
 
+    public LiveData<List<ItemPhoto>> getItemReceiptsPhotos(String itemID) {
+        return mPhotosDAO.getItemReceiptPhotos(itemID);
+    }
+
+    public LiveData<List<ItemPhoto>> getItemObjectPhotos(String itemID) {
+        return mPhotosDAO.getItemObjectPhotos(itemID);
+    }
+
     public LiveData<Integer> getReceiptPicturesNum() {
         return mPhotosDAO.getReceiptNumbers();
     }
