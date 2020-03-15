@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -29,6 +30,7 @@ import com.example.inventoryirecord.photos.BitmapUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGalleryAdapter.OnPhotoClickListener{
@@ -82,7 +84,14 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         itemPhotosRecyclerView.setHasFixedSize(true);
         itemPhotosAdapter = new PhotoGalleryAdapter(this, false, this);
         itemPhotosRecyclerView.setAdapter(itemPhotosAdapter);
-        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+//        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+
+        inventorySaveViewModel.getItemObjectPhotos(inventoryItem.itemID).observe(this, new Observer<List<ItemPhoto>>() {
+            @Override
+            public void onChanged(List<ItemPhoto> itemPhotos) {
+                itemPhotosAdapter.updateImageList(itemPhotos);
+            }
+        });
 
         StaggeredGridLayoutManager receiptStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         RecyclerView receiptPhotosRecyclerView = findViewById(R.id.receipt_photo_rec_view);
@@ -90,7 +99,17 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         receiptPhotosRecyclerView.setHasFixedSize(true);
         receiptPhotosAdapter = new PhotoGalleryAdapter(this, true, this);
         receiptPhotosRecyclerView.setAdapter(receiptPhotosAdapter);
-        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
+
+//        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
+        inventorySaveViewModel.getItemReceiptPhotos(inventoryItem.itemID).observe(this, new Observer<List<ItemPhoto>>() {
+            @Override
+            public void onChanged(List<ItemPhoto> itemPhotos) {
+                receiptPhotosAdapter.updateImageList(itemPhotos);
+            }
+        });
+
+
+//        receiptPhotosAdapter.updateImageList(inventorySaveViewModel.getItemObjectPhotos(inventoryItem.itemID));
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -164,12 +183,12 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
                         inventoryItem.receiptPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
-                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
+//                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
                         inventoryItem.itemPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
-                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+//                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     if (inputStream != null) {
                         inputStream.close();
@@ -217,10 +236,10 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     }
 
     @Override
-    public void onPhotoClicked(final String photoLocation, final boolean isForReceipt) {
+    public void onPhotoClicked(final ItemPhoto photoLocation, final boolean isForReceipt) {
         try {
             final Button deletePhotoButton = findViewById(R.id.delete_photo);
-            if(photoLocation.equals(currentPhoto)) {
+            if((photoLocation.path).equals(currentPhoto)) {
                 //options.inSampleSize = 4;
                 int visibility = imageView.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE;
                 imageView.setVisibility(visibility);
@@ -228,24 +247,24 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 deletePhotoButton.setEnabled(true);
             } else {
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                imageView.setImageBitmap(BitmapUtils.getSavedImage(photoLocation, options));
+                imageView.setImageBitmap(BitmapUtils.getSavedImage(photoLocation.path, options));
                 imageView.setVisibility(View.VISIBLE);
                 deletePhotoButton.setVisibility(View.VISIBLE);
                 deletePhotoButton.setEnabled(true);
-                currentPhoto = photoLocation;
+                currentPhoto = photoLocation.path;
             }
             deletePhotoButton.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BitmapUtils.deleteImageFile(photoLocation);
+                    BitmapUtils.deleteImageFile(photoLocation.path);
                     if(isForReceipt) {
-                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation, inventoryItem.itemID, true));
-                        inventoryItem.receiptPics.remove(photoLocation);
-                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
+                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, true));
+                        inventoryItem.receiptPics.remove(photoLocation.path);
+//                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
-                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation, inventoryItem.itemID, false));
-                        inventoryItem.itemPics.remove(photoLocation);
-                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
+                        inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, false));
+                        inventoryItem.itemPics.remove(photoLocation.path);
+//                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     imageView.setVisibility(View.INVISIBLE);
                     deletePhotoButton.setVisibility(View.INVISIBLE);

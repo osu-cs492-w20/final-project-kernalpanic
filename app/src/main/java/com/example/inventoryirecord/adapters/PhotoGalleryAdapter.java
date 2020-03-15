@@ -13,16 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inventoryirecord.R;
+import com.example.inventoryirecord.data.ItemPhoto;
 import com.example.inventoryirecord.photos.BitmapUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapter.PhotoViewHolder> {
     private static final String TAG = PhotoGalleryAdapter.class.getSimpleName();
-    private List<String> imageList;
+    private List<ItemPhoto> imageList;
     private HashMap<String, Bitmap> images;
     private OnPhotoClickListener onPhotoClickListener;
     private boolean isReceipt;
@@ -35,15 +37,19 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
 
     }
 
-    public void updateImageList(List<String> images) {
+    public void updateImageList(List<ItemPhoto> images) {
         this.imageList = images;
         this.images = loadImagesFromMemory(images);
         notifyDataSetChanged();
     }
 
-    private HashMap<String, Bitmap> loadImagesFromMemory(List<String> images) {
+    private HashMap<String, Bitmap> loadImagesFromMemory(List<ItemPhoto> images) {
+        List<String> locationStringList = new ArrayList<>();
+        for (ItemPhoto singleItemPhoto: images) {
+            locationStringList.add(singleItemPhoto.path);
+        }
         HashMap<String, Bitmap> hashMap = new HashMap<>();
-        for (String image : images) {
+        for (String image : locationStringList) {
             try {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 4;
@@ -75,7 +81,7 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
     }
 
     public interface OnPhotoClickListener {
-        void onPhotoClicked(String photoLocation, boolean isForReceipt);
+        void onPhotoClicked(ItemPhoto photoLocation, boolean isForReceipt);
     }
 
     class PhotoViewHolder extends RecyclerView.ViewHolder {
@@ -91,10 +97,10 @@ public class PhotoGalleryAdapter extends RecyclerView.Adapter<PhotoGalleryAdapte
                 }
             });
         }
-        void bind(String photoLocation) {
+        void bind(ItemPhoto photoLocation) {
             Log.d(TAG, "In on bind for " + photoLocation);
             //imageView.setImageBitmap(PhotoLibraryUtils.getSavedImage(photoLocation));
-            imageView.setImageBitmap(images.get(photoLocation));
+            imageView.setImageBitmap(images.get(photoLocation.path));
         }
     }
 }

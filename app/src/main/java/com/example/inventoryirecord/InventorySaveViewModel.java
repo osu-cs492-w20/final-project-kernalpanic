@@ -37,6 +37,14 @@ public class InventorySaveViewModel extends AndroidViewModel {
         return inventoryRepository.getObjectPicturesNum();
     }
 
+    public LiveData<List<ItemPhoto>> getItemObjectPhotos(String itemId) {
+        return inventoryRepository.getItemObjectPhotos(itemId);
+    }
+
+    public LiveData<List<ItemPhoto>> getItemReceiptPhotos(String itemId) {
+        return inventoryRepository.getItemReceiptsPhotos(itemId);
+    }
+
     public LiveData<Integer> getReceiptNumber() {
         return inventoryRepository.getReceiptPicturesNum();
     }
