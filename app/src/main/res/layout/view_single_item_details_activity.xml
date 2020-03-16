@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -270,7 +270,6 @@
                 android:layout_height="match_parent"
                 android:id="@+id/edit_add_item_fragment"
                 android:name="com.example.inventoryirecord.EditAddItemFragment"/>
-<!--            <include layout="@layout/form_edit_item_layout" />-->
         </FrameLayout>
         <FrameLayout
             android:layout_width="match_parent"

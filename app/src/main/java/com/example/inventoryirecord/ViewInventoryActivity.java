@@ -18,23 +18,19 @@ import java.util.List;
 public class ViewInventoryActivity extends AppCompatActivity implements ViewItemAdapter.OnInventoryItemClickListener {
     public final static String TAG = ViewInventoryActivity.class.getSimpleName();
     private ViewItemAdapter viewItemAdapter;
-    private RecyclerView inventoryItemsRecyclerView;
-    private InventoryViewModel inventoryViewModel;
-    private InventorySaveViewModel inventorySaveViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_inventory_activity);
-        inventoryItemsRecyclerView = findViewById(R.id.inventory_rec_view);
+        RecyclerView inventoryItemsRecyclerView = findViewById(R.id.inventory_rec_view);
         inventoryItemsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         inventoryItemsRecyclerView.setHasFixedSize(true);
 
         viewItemAdapter = new ViewItemAdapter(this);
         inventoryItemsRecyclerView.setAdapter(viewItemAdapter);
 
-//        inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
-        inventorySaveViewModel = new ViewModelProvider(
+        InventorySaveViewModel inventorySaveViewModel = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
         ).get(InventorySaveViewModel.class);
@@ -45,12 +41,6 @@ public class ViewInventoryActivity extends AppCompatActivity implements ViewItem
                 viewItemAdapter.updateInventoryItems(inventoryItems);
             }
         });
-//        inventoryViewModel.getInventoryItemList().observe(this, new Observer<List<InventoryItem>>() {
-//            @Override
-//            public void onChanged(List<InventoryItem> inventoryItems) {
-//                viewItemAdapter.updateInventoryItems(inventoryItems);
-//            }
-//        });
     }
 
     @Override
