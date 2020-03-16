@@ -42,8 +42,6 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     public static final int VIEW_EDIT_PHOTOS_ACTIVITY_CODE = 134;
     public static final int PHOTO_VIEW_ACTIVITY_CODE = 135;
 
-    private boolean storageReadPermissionEnabled;
-    private boolean storageWritePermissionEnabled;
     private boolean isForReceipt;
     private boolean previewIsForReceipt;
     private ImageView imageView;
@@ -66,12 +64,6 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         if (Objects.nonNull(mainIntent) && mainIntent.hasExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM)) {
             inventoryItem = (InventoryItem) mainIntent.getSerializableExtra(ViewSingleItemDetailsActivity.INVENTORY_ITEM);
         }
-        if (inventoryItem != null && inventoryItem.itemPics == null) {
-            inventoryItem.itemPics = new ArrayList<>();
-        }
-        if (inventoryItem != null && inventoryItem.receiptPics == null) {
-            inventoryItem.receiptPics = new ArrayList<>();
-        }
 
         inventorySaveViewModel = new ViewModelProvider(
                 this,
@@ -84,12 +76,12 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         itemPhotosRecyclerView.setHasFixedSize(true);
         itemPhotosAdapter = new PhotoGalleryAdapter(this, false, this);
         itemPhotosRecyclerView.setAdapter(itemPhotosAdapter);
-//        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
 
         inventorySaveViewModel.getItemObjectPhotos(inventoryItem.itemID).observe(this, new Observer<List<ItemPhoto>>() {
             @Override
             public void onChanged(List<ItemPhoto> itemPhotos) {
                 itemPhotosAdapter.updateImageList(itemPhotos);
+                inventoryItem.itemPics = convertToImageLocationList(itemPhotos);
             }
         });
 
@@ -100,16 +92,14 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
         receiptPhotosAdapter = new PhotoGalleryAdapter(this, true, this);
         receiptPhotosRecyclerView.setAdapter(receiptPhotosAdapter);
 
-//        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
         inventorySaveViewModel.getItemReceiptPhotos(inventoryItem.itemID).observe(this, new Observer<List<ItemPhoto>>() {
             @Override
             public void onChanged(List<ItemPhoto> itemPhotos) {
                 receiptPhotosAdapter.updateImageList(itemPhotos);
+                inventoryItem.receiptPics = convertToImageLocationList(itemPhotos);
             }
         });
 
-
-//        receiptPhotosAdapter.updateImageList(inventorySaveViewModel.getItemObjectPhotos(inventoryItem.itemID));
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -181,14 +171,10 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     Bitmap image = BitmapFactory.decodeStream(inputStream);
                     if (isForReceipt) {
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
-//                        inventoryItem.receiptPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
-//                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
                         String path = BitmapUtils.saveImage(getApplicationContext(), image, false);
-//                        inventoryItem.itemPics.add(path);
                         inventorySaveViewModel.insertSinglePhoto(new ItemPhoto(path,inventoryItem.itemID, isForReceipt));
-//                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     if (inputStream != null) {
                         inputStream.close();
@@ -215,6 +201,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE : {
+                boolean storageReadPermissionEnabled;
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     storageReadPermissionEnabled = true;
                     Log.d(TAG, "permission granted: " + storageReadPermissionEnabled);
@@ -224,6 +211,7 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 }
             }
             case MY_PERMISSIONS_REQUEST_WRITE_EXT_STORAGE : {
+                boolean storageWritePermissionEnabled;
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     storageWritePermissionEnabled = true;
                     Log.d(TAG, "permission granted: " + storageWritePermissionEnabled);
@@ -259,12 +247,8 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                     BitmapUtils.deleteImageFile(photoLocation.path);
                     if(isForReceipt) {
                         inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, true));
-//                        inventoryItem.receiptPics.remove(photoLocation.path);
-//                        receiptPhotosAdapter.updateImageList(inventoryItem.receiptPics);
                     } else {
                         inventorySaveViewModel.deleteSinglePhoto(new ItemPhoto(photoLocation.path, inventoryItem.itemID, false));
-//                        inventoryItem.itemPics.remove(photoLocation.path);
-//                        itemPhotosAdapter.updateImageList(inventoryItem.itemPics);
                     }
                     imageView.setVisibility(View.INVISIBLE);
                     deletePhotoButton.setVisibility(View.INVISIBLE);
@@ -284,5 +268,13 @@ public class ViewEditPhotosActivity extends AppCompatActivity implements PhotoGa
                 new Intent().putExtra(EDIT, inventoryItem));
         finish();
         return true;
+    }
+
+    private ArrayList<String> convertToImageLocationList(List<ItemPhoto> itemPhotoList) {
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        for (ItemPhoto itemPhoto : itemPhotoList) {
+            stringArrayList.add(itemPhoto.path);
+        }
+        return stringArrayList;
     }
 }

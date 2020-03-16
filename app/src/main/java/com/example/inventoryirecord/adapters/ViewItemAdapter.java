@@ -30,8 +30,8 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.Invent
     @Override
     public void onBindViewHolder(@NonNull InventoryItemsViewHolder holder, int position) {
         holder.itemView.setBackgroundColor(position % 2 == 0
-                ? Color.rgb(226,216,162)
-                : Color.rgb(253,243,182)); //parseColor("FDF3B6") : Color.parseColor("E2D8A2"));
+                ? Color.rgb(224,214,158)
+                : Color.rgb(240,230,174));
         holder.bind(inventoryItems.get(position));
     }
 

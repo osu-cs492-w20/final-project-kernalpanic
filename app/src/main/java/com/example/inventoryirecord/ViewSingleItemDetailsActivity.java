@@ -49,7 +49,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     private CheckBox newCheckBox;
 
     private InventoryItem inventoryItem;
-    private InventoryViewModel inventoryViewModel;
     private InventorySaveViewModel inventorySaveViewModel;
     private LinearLayout viewPhotosButton;
 
@@ -62,7 +61,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
             Log.d(TAG, "has extra");
             inventoryItem = (InventoryItem) intent.getSerializableExtra(INVENTORY_ITEM);
         }
-        //inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
         inventorySaveViewModel = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
@@ -268,8 +266,6 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         if(requestCode == ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
             if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
                 inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
-//                inventoryViewModel.updateSingleInventoryItem(inventoryItem);
-//                inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
             }
         }
     }
