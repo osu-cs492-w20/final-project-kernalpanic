@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.inventoryirecord.data.InventoryItem;
 
+import com.example.inventoryirecord.data.Status;
 import com.example.inventoryirecord.data.azure.ReceiptResult;
 import com.example.inventoryirecord.photos.BitmapUtils;
 
@@ -47,15 +49,17 @@ public class AddItemActivity extends AppCompatActivity {
 
     private boolean azureFlag;
 
-    private LinearLayout editAddItemLayout;
-    private LinearLayout saveCancelButton;
-
     private InventoryItem mInventoryItem;
     private InventoryViewModel inventoryViewModel;
     private InventorySaveViewModel inventorySaveViewModel;
 
-    private AzureViewModel showReceiptAnalyseViewModel;
+    private LinearLayout editAddItemLayout;
+    private LinearLayout saveCancelButton;
+    private Button mAddReceiptButton;
+    private Button mAddObjectButton;
+    private ProgressBar mLoadingIndicatorPB;
 
+    private AzureViewModel showReceiptAnalyseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class AddItemActivity extends AppCompatActivity {
         editAddItemLayout.setVisibility(View.VISIBLE);
         saveCancelButton = findViewById(R.id.save_cancel_button_layout);
         saveCancelButton.setVisibility(View.VISIBLE);
+        mLoadingIndicatorPB = findViewById(R.id.pb_loading_indicator);
 
         // Build new inventory item. Can be used without any photo data.
         mInventoryItem = new InventoryItem();
@@ -82,12 +87,12 @@ public class AddItemActivity extends AppCompatActivity {
         ).get(InventorySaveViewModel.class);
 
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
+        CheckForAnalysisFailure();
         //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if (s == null) {
-                    Toast.makeText(getApplicationContext(),"Failed to ID Object", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (object_update) {
@@ -111,33 +116,39 @@ public class AddItemActivity extends AppCompatActivity {
                 }
 
                 if (receipt_update) {
-                    setReceiptFields(s);
+                    if(setReceiptFields(s)){
+                        Toast.makeText(getApplicationContext(),"Failed to Analyze Receipt", Toast.LENGTH_SHORT).show();
+                        if (mSavedReceiptURI != null){
+                            BitmapUtils.deleteImageFile(mSavedReceiptURI);
+                            mSavedReceiptURI = null;
+                        }
+                    }
                 }
             }
         });
 
         if (checkFilePermission()) {
             // Button listener for add receipt.
-            Button addReceiptButton = findViewById(R.id.add_receipt_photo_button);
+            mAddReceiptButton = findViewById(R.id.add_receipt_photo_button);
             // Button listener for add object.
-            Button addObjectButton = findViewById(R.id.add_object_photo_button);
+            mAddObjectButton = findViewById(R.id.add_object_photo_button);
 
             LinearLayout saveButton = findViewById(R.id.save_edits_single_item_button);
             LinearLayout cancelButton = findViewById(R.id.cancel_edits_single_item_button);
 
-            addReceiptButton.setOnClickListener(new View.OnClickListener() {
+            mAddReceiptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // If user already has an image, overwrite it.
                     // This will be managed differently later.
                     if (mSavedReceiptURI != null){
-                        BitmapUtils.deleteImageFile(mSavedObjectURI);
+                        BitmapUtils.deleteImageFile(mSavedReceiptURI);
                     }
                     goToAddReceipt();
                 }
             });
 
-            addObjectButton.setOnClickListener(new View.OnClickListener() {
+            mAddObjectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // If user already has an image, overwrite it.
@@ -165,6 +176,68 @@ public class AddItemActivity extends AppCompatActivity {
             Log.d("AddItemActivity", "User denied permission");
             finish();
         }
+    }
+    private void CheckForAnalysisFailure(){
+        showReceiptAnalyseViewModel.getObjectLoadingStatus().observe(this, new Observer<Status>() {
+            @Override
+            public void onChanged(Status status) {
+                if (status == Status.LOADING) {
+                    //Disable buttons.
+                    mAddObjectButton.setEnabled(false);
+                    mAddReceiptButton.setEnabled(false);
+                    saveCancelButton.setVisibility(View.GONE);
+                    editAddItemLayout.setVisibility(View.GONE);
+                    mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                }
+                // Want to implement a loading icon? Do it here.
+                if (status == Status.SUCCESS) {
+                    //Enable buttons.
+                    mAddObjectButton.setEnabled(true);
+                    mAddReceiptButton.setEnabled(true);
+                    saveCancelButton.setVisibility(View.VISIBLE);
+                    editAddItemLayout.setVisibility(View.VISIBLE);
+                    mLoadingIndicatorPB.setVisibility(View.GONE);
+                }
+                if (status == Status.ERROR) {
+                    //Enable buttons.
+                    mAddObjectButton.setEnabled(true);
+                    mAddReceiptButton.setEnabled(true);
+                    saveCancelButton.setVisibility(View.VISIBLE);
+                    editAddItemLayout.setVisibility(View.VISIBLE);
+                    mLoadingIndicatorPB.setVisibility(View.GONE);
+                }
+            }
+        });
+        showReceiptAnalyseViewModel.getReceiptLoadingStatus().observe(this, new Observer<Status>() {
+            @Override
+            public void onChanged(Status status) {
+                if (status == Status.LOADING) {
+                    //Disable buttons.
+                    mAddObjectButton.setEnabled(false);
+                    mAddReceiptButton.setEnabled(false);
+                    saveCancelButton.setVisibility(View.GONE);
+                    editAddItemLayout.setVisibility(View.GONE);
+                    mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                }
+                if (status == Status.SUCCESS){
+                    //Enable buttons.
+                    mAddObjectButton.setEnabled(true);
+                    mAddReceiptButton.setEnabled(true);
+                    saveCancelButton.setVisibility(View.VISIBLE);
+                    editAddItemLayout.setVisibility(View.VISIBLE);
+                    mLoadingIndicatorPB.setVisibility(View.GONE);
+                }
+                if (status == Status.ERROR){
+                    //Enable buttons.
+                    mAddObjectButton.setEnabled(true);
+                    mAddReceiptButton.setEnabled(true);
+                    saveCancelButton.setVisibility(View.VISIBLE);
+                    editAddItemLayout.setVisibility(View.VISIBLE);
+                    mLoadingIndicatorPB.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "Failed to Analyze Receipt", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     // Open AddImageActivity to get a receipt photo.
     public void goToAddReceipt() {
@@ -242,7 +315,7 @@ public class AddItemActivity extends AppCompatActivity {
             BitmapUtils.deleteImageFile(mSavedObjectURI);
         }
         if (mSavedReceiptURI != null){
-            BitmapUtils.deleteImageFile(mSavedObjectURI);
+            BitmapUtils.deleteImageFile(mSavedReceiptURI);
         }
         finish();
         return;
@@ -310,22 +383,30 @@ public class AddItemActivity extends AppCompatActivity {
         return iCode;
     }
 
-    private void setReceiptFields(ReceiptResult s){
+    private boolean setReceiptFields(ReceiptResult s) {
+        int successes = 0;
         test = findViewById(R.id.edit_single_item_name_text_view);
-        if (s.MerchantName != null)
+        if (s.MerchantName != null) {
             test.setText(s.MerchantName.text);
-
+            successes++;
+        }
         test = findViewById(R.id.edit_single_item_notes_text_view);
-        if (s.MerchantAddress != null)
+        if (s.MerchantAddress != null){
             test.setText(s.MerchantAddress.text);
-
+            successes++;
+        }
         test = findViewById(R.id.edit_single_item_value_text_view);
-        if (s.Total.text != null)
+        if (s.Total != null) {
             test.setText(s.Total.text);
-
+            successes++;
+        }
         test = findViewById(R.id.edit_single_item_date_purch_text_view);
-        if (s.TransactionDate != null)
+        if (s.TransactionDate != null) {
             test.setText(s.TransactionDate.text);
+            successes++;
+        }
+
+        return (successes <= 0) ? true : false;
     }
 
     @Override
@@ -334,7 +415,7 @@ public class AddItemActivity extends AppCompatActivity {
             BitmapUtils.deleteImageFile(mSavedObjectURI);
         }
         if (mSavedReceiptURI != null){
-            BitmapUtils.deleteImageFile(mSavedObjectURI);
+            BitmapUtils.deleteImageFile(mSavedReceiptURI);
         }
         finish();
         return true;
