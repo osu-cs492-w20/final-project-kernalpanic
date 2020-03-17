@@ -78,41 +78,41 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         itemDetailsLayout = findViewById(R.id.view_single_item_details_layout);
         editItemDetailsLayout = findViewById(R.id.edit_add_item_fragment);
 
-            alertDialog = new AlertDialog.Builder(this);
+        alertDialog = new AlertDialog.Builder(this);
 
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleEditForm();
-                }
-            });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleEditForm();
+            }
+        });
 
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleSaveForm();
-                }
-            });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleSaveForm();
+            }
+        });
 
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleCancelForm();
-                }
-            });
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleDeleteItem();
-                }
-            });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleCancelForm();
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleDeleteItem();
+            }
+        });
 
-            viewPhotosButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handlePhotoButtonClick();
-                }
-            });
+        viewPhotosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handlePhotoButtonClick();
+            }
+        });
 
     }
 
@@ -122,12 +122,16 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        for(String location : inventoryItem.itemPics) {
-                            BitmapUtils.deleteImageFile(location);
+                        if (inventoryItem.itemPics != null) {
+                            for (String location : inventoryItem.itemPics) {
+                                BitmapUtils.deleteImageFile(location);
+                            }
                         }
 
-                        for(String location : inventoryItem.receiptPics) {
-                            BitmapUtils.deleteImageFile(location);
+                        if (inventoryItem.receiptPics != null) {
+                            for (String location : inventoryItem.receiptPics) {
+                                BitmapUtils.deleteImageFile(location);
+                            }
                         }
                         //inventoryViewModel.deleteSingleInventoryItem(inventoryItem);
                         inventorySaveViewModel.deleteInventoryItem(inventoryItem);
@@ -167,6 +171,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         itemDetailsLayout.setVisibility(View.VISIBLE);
         inventorySaveViewModel.updateInventoryItemFields(inventoryItem);
     }
+
     private void handleCancelForm() {
         editDeleteButtonsLayout.setVisibility(View.VISIBLE);
         parentSaveCancelButtonsLayout.setVisibility(View.INVISIBLE);
@@ -204,6 +209,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         editTextViewHashMap.put(DATE_MANU, (EditText) findViewById(DATE_MANU.editId));
 
     }
+
     private void setViewText(HashMap<TextViewKeys, TextView> hashMap, InventoryItem item, boolean edit) {
         Objects.requireNonNull(hashMap.get(ITEM_NAME)).setText(item.itemName);
         Objects.requireNonNull(hashMap.get(ITEM_TYPE)).setText(item.itemType);
@@ -245,7 +251,7 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
         SERIAL_NUMBER(R.id.single_item_serial_text_view, R.id.edit_single_item_serial_text_view),
         VALUE(R.id.single_item_value_text_view, R.id.edit_single_item_value_text_view),
         DATE_PURCH(R.id.single_item_date_purch_text_view, R.id.edit_single_item_date_purch_text_view),
-        DATE_MANU(R.id.single_item_date_manu_text_view,R.id.edit_single_item_date_manu_text_view),
+        DATE_MANU(R.id.single_item_date_manu_text_view, R.id.edit_single_item_date_manu_text_view),
         //DATE_ADD(1,1),
         NOTES(R.id.single_item_notes_text_view, R.id.edit_single_item_notes_text_view),
         PRICE_PAID(R.id.single_item_price_text_view, R.id.edit_single_item_price_text_view),
@@ -263,8 +269,8 @@ public class ViewSingleItemDetailsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
-            if(data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
+        if (requestCode == ViewEditPhotosActivity.VIEW_EDIT_PHOTOS_ACTIVITY_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null && data.hasExtra(ViewEditPhotosActivity.EDIT)) {
                 inventoryItem = (InventoryItem) data.getSerializableExtra(ViewEditPhotosActivity.EDIT);
             }
         }
