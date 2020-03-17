@@ -61,7 +61,6 @@ public class AddItemActivity extends AppCompatActivity {
 
     private AzureViewModel showReceiptAnalyseViewModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +118,10 @@ public class AddItemActivity extends AppCompatActivity {
                 if (receipt_update) {
                     if(setReceiptFields(s)){
                         Toast.makeText(getApplicationContext(),"Failed to Analyze Receipt", Toast.LENGTH_SHORT).show();
+                        if (mSavedReceiptURI != null){
+                            BitmapUtils.deleteImageFile(mSavedReceiptURI);
+                            mSavedReceiptURI = null;
+                        }
                     }
                 }
             }
