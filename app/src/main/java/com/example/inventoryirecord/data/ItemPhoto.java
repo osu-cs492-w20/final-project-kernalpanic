@@ -41,20 +41,23 @@ public class ItemPhoto implements Serializable {
     public static List<ItemPhoto> buildPhotosFromInventoryItem(InventoryItem inventoryItem) {
         List<ItemPhoto> itemPhotos = new ArrayList<>();
 
-        for (String path : inventoryItem.itemPics) {
-            ItemPhoto photo = new ItemPhoto();
-            photo.isReceipt = false;
-            photo.itemID = inventoryItem.itemID;
-            photo.path = path;
-            itemPhotos.add(photo);
+        if (inventoryItem.itemPics != null) {
+            for (String path : inventoryItem.itemPics) {
+                ItemPhoto photo = new ItemPhoto();
+                photo.isReceipt = false;
+                photo.itemID = inventoryItem.itemID;
+                photo.path = path;
+                itemPhotos.add(photo);
+            }
         }
-
-        for (String path : inventoryItem.receiptPics) {
-            ItemPhoto photo = new ItemPhoto();
-            photo.isReceipt = true;
-            photo.itemID = inventoryItem.itemID;
-            photo.path = path;
-            itemPhotos.add(photo);
+        if (inventoryItem.receiptPics != null) {
+            for (String path : inventoryItem.receiptPics) {
+                ItemPhoto photo = new ItemPhoto();
+                photo.isReceipt = true;
+                photo.itemID = inventoryItem.itemID;
+                photo.path = path;
+                itemPhotos.add(photo);
+            }
         }
         return itemPhotos;
 

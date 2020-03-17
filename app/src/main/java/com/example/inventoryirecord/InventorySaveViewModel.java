@@ -54,13 +54,6 @@ public class InventorySaveViewModel extends AndroidViewModel {
     }
 
     public void deleteInventoryItem(InventoryItem inventoryItem) {
-        for (String location : inventoryItem.receiptPics) {
-            BitmapUtils.deleteImageFile(location);
-        }
-        for (String location : inventoryItem.itemPics) {
-            BitmapUtils.deleteImageFile(location);
-        }
-
         inventoryRepository.deleteInventoryItem(inventoryItem);
     }
 
