@@ -322,6 +322,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
     // Going to be a messy method of checks. Maybe clean up later?
     private boolean buildInventory(){
+        String value;
         CheckBox newItem = findViewById(R.id.edit_single_item_new_check_box);
         TextView save = findViewById(R.id.edit_single_item_name_text_view);
         String timeCode = new SimpleDateFormat("yyyyMMdd_HHmmss",
@@ -349,8 +350,10 @@ public class AddItemActivity extends AppCompatActivity {
         mInventoryItem.datePurchased = save.getText().toString();
 
         save = findViewById(R.id.edit_single_item_value_text_view);
+        value = save.getText().toString();
+        value = value.replaceAll("[^\\d.]", "");
         try {
-            mInventoryItem.value = Double.valueOf(save.getText().toString());
+            mInventoryItem.value = Double.valueOf(value);
         } catch(NumberFormatException e){
             mInventoryItem.value = 0.0;
         }
