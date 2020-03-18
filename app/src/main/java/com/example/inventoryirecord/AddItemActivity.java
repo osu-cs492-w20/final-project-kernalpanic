@@ -87,7 +87,9 @@ public class AddItemActivity extends AppCompatActivity {
         ).get(InventorySaveViewModel.class);
 
         inventoryViewModel = new ViewModelProvider(this).get(InventoryViewModel.class);
+        // Set observers for status changes.
         CheckForAnalysisFailure();
+        // Note: These observers could be moved to a method for cleaning.
         //observe the change of best match object
         showReceiptAnalyseViewModel.getBestMatchObject().observe(this, new Observer<String>() {
             @Override
@@ -95,6 +97,7 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
+                // If the user requested to use Azure for object analysis.
                 if (object_update) {
                     String tokens[] = s.split(":");
                     test = findViewById(R.id.edit_single_item_type_text_view);
@@ -114,7 +117,7 @@ public class AddItemActivity extends AppCompatActivity {
                 if (s == null) {
                     return;
                 }
-
+                // If the user requested to use Azure for receipt analysis.
                 if (receipt_update) {
                     if(setReceiptFields(s)){
                         Toast.makeText(getApplicationContext(),"Failed to Analyze Receipt", Toast.LENGTH_SHORT).show();
@@ -126,7 +129,7 @@ public class AddItemActivity extends AppCompatActivity {
                 }
             }
         });
-
+        // Check the users file permissions.
         if (checkFilePermission()) {
             // Button listener for add receipt.
             mAddReceiptButton = findViewById(R.id.add_receipt_photo_button);
@@ -177,6 +180,7 @@ public class AddItemActivity extends AppCompatActivity {
             finish();
         }
     }
+    // Method for checking if Azure produced any errors.
     private void CheckForAnalysisFailure(){
         showReceiptAnalyseViewModel.getObjectLoadingStatus().observe(this, new Observer<Status>() {
             @Override
@@ -349,13 +353,16 @@ public class AddItemActivity extends AppCompatActivity {
         save = findViewById(R.id.edit_single_item_date_purch_text_view);
         mInventoryItem.datePurchased = save.getText().toString();
 
+        // Get data from value field and clean it.
         save = findViewById(R.id.edit_single_item_value_text_view);
         value = save.getText().toString();
         value = value.replaceAll("[^\\d.]", "");
-        try {
+        try { // This will remain in a try catch for odd cases such as their being more than one '.'.
             mInventoryItem.value = Double.valueOf(value);
         } catch(NumberFormatException e){
+            Toast.makeText(getApplicationContext(),"Value Field is Not a Number", Toast.LENGTH_SHORT).show();
             mInventoryItem.value = 0.0;
+            return false;
         }
 
         save = findViewById(R.id.edit_single_item_type_text_view);
@@ -377,6 +384,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         return true;
     }
+    // Utility method for making int from string.
     private int textSum(String sCode){
         int iCode = 0;
 
@@ -385,7 +393,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         return iCode;
     }
-
+    // Set the fields based of data from Azure.
     private boolean setReceiptFields(ReceiptResult s) {
         int successes = 0;
         test = findViewById(R.id.edit_single_item_name_text_view);
@@ -411,7 +419,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         return (successes <= 0) ? true : false;
     }
-
+    // Used to clean images if the user returns to parent activity.
     @Override
     public boolean onSupportNavigateUp() {
         if (mSavedObjectURI != null){
